@@ -1,6 +1,13 @@
 import ugc_guard_python
 from ugc_guard_python.wrapper.content_wrapper import ContentWrapper, ReportContent, ReportPerson, Body, TextBody, MultiMediaBody, MultiMultiMediaBody, ContentType
 from typing import Optional, List, Dict, Any
+from ugc_guard_python.models.body_create_magic_report import BodyCreateMagicReport
+from ugc_guard_python.models.report_create import ReportCreate
+from ugc_guard_python.models.reporter import Reporter
+from ugc_guard_python.models.content_create import ContentCreate
+from ugc_guard_python.models.main_content_sender import MainContentSender
+from ugc_guard_python.models.person import Person
+from ugc_guard_python.models.person_db import PersonDB
 
 
 class GuardClient:
@@ -16,8 +23,8 @@ class GuardClient:
         module_id: str,
         module_secret: str,
         type_id: str,
-        main_content: Any,
-        reporter: Any,
+        main_content: ContentWrapper,
+        reporter: ReportPerson,
         options: Optional[Dict[str, Any]] = None
     ) -> Any:
         options = options or {}
@@ -34,6 +41,7 @@ class GuardClient:
             main_content_create = self.convert_content_to_content_create(
                 main_content, module_id, module_secret
             )
+            
             if on_progress:
                 on_progress(1, total_steps)
 
@@ -55,22 +63,25 @@ class GuardClient:
                 )
 
             reporter_person = self.convert_person_to_person_db(reporter, module_id)
+            reporter = Reporter(actual_instance=reporter_person)
 
-            report = {
-                "module_id": module_id,
-                "type_id": type_id,
-                "description": description
-            }
+            tmp = PersonDB(**main_content_sender.model_dump())
 
-            request_body = {
-                "report": report,
-                "reporter": reporter_person,
-                "main_content": main_content_create,
-                "main_content_sender": main_content_sender,
-                "report_context": report_context,
-                "report_context_persons": report_context_persons,
-                "channels": channels
-            }
+            main_content_sender = MainContentSender(actual_instance=tmp)
+            report = ReportCreate(
+                module_id=module_id,
+                type_id=type_id,
+                description=description
+            )
+            request_body = BodyCreateMagicReport(
+                report=report,
+                reporter=reporter,
+                main_content=main_content_create,
+                main_content_sender=main_content_sender,
+                report_context=report_context,
+                report_context_persons=report_context_persons,
+                channels=channels
+            )
 
             params = {
                 "report_category": report_category,
@@ -90,47 +101,48 @@ class GuardClient:
         except ugc_guard_python.ApiException as e:
             raise Exception(f"Exception when calling ReportsApi->create_magic_report: {e}")
 
-    def convert_person_to_person_db(self, person: ReportPerson, module_id: str) -> dict:
-        return {
-            "unique_partner_id": person.unique_partner_id,
-            "name": person.name,
-            "phone": person.phone,
-            "email": person.email,
-            "extra_data": person.additional_data,
-            "module_id": module_id
-        }
+    def convert_person_to_person_db(self, person: ReportPerson, module_id: str) -> Person:
+        return Person(
+            id=None,
+            unique_partner_id=person.unique_partner_id,
+            name=person.name,
+            phone=person.phone,
+            email=person.email,
+            extra_data=person.additional_data,
+            module_id=module_id
+        )
 
     def convert_content_to_content_create(
         self, content_wrapper: ContentWrapper, module_id: str, module_secret: str
-    ) -> dict:
+    ) -> ContentCreate:
         report_content = content_wrapper.content
         body = report_content.body
         type_ = body.content_type
 
         if type_ in [ContentType.OTHER, ContentType.TEXT]:
-            return {
-                "creator_id": content_wrapper.creator.unique_partner_id,
-                "body": body.body,
-                "body_type": type_,
-                "created_at": report_content.created_at,
-                "extra_data": report_content.additional_data,
-                "ip": report_content.ip,
-                "unique_partner_id": report_content.unique_partner_id
-            }
+            return ContentCreate(
+                creator_id=content_wrapper.creator.unique_partner_id,
+                body=body.body,
+                body_type=type_,
+                created_at=report_content.created_at,
+                extra_data=report_content.additional_data,
+                ip=report_content.ip,
+                unique_partner_id=report_content.unique_partner_id
+            )
         else:
             files = self.upload_files(module_id, module_secret, content_wrapper)
             if not files:
                 raise Exception("Failed to upload files.")
-            return {
-                "creator_id": content_wrapper.creator.unique_partner_id,
-                "body": body.body,
-                "body_type": type_,
-                "created_at": report_content.created_at,
-                "extra_data": report_content.additional_data,
-                "ip": report_content.ip,
-                "unique_partner_id": report_content.unique_partner_id,
-                "media_identifiers": [f.id for f in files if f.id]
-            }
+            return ContentCreate(
+                creator_id=content_wrapper.creator.unique_partner_id,
+                body=body.body,
+                body_type=type_,
+                created_at=report_content.created_at,
+                extra_data=report_content.additional_data,
+                ip=report_content.ip,
+                unique_partner_id=report_content.unique_partner_id,
+                media_identifiers=[f.id for f in files if f.id]
+            )
 
     def upload_files(
         self, module_id: str, module_secret: str, content: ContentWrapper
@@ -157,19 +169,14 @@ class GuardClient:
         return []
 
     def _actual_upload(
-        self, module_id: str, module_secret: str, multi_media_body: Any
+        self, module_id: str, module_secret: str, multi_media_body: MultiMediaBody
     ) -> Any:
-        form_data = {
-            "upload_file": (
-                multi_media_body.filename, multi_media_body.bytes, multi_media_body.mime_type
-            )
-        }
-        params = {
-            "module_id": module_id,
-            "secret": module_secret
-        }
         files_api = ugc_guard_python.FilesApi(self.api_client)
-        return files_api.upload_file(file=form_data, **params)
+        return files_api.upload_file(
+            module_id=module_id,
+            upload_file=(multi_media_body.filename, multi_media_body.bytes),
+            secret=module_secret
+        )
 
     def is_multi_media_body(self, body: Body) -> bool:
         return isinstance(body, MultiMediaBody)
