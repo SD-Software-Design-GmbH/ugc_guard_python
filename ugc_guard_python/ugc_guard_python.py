@@ -1,3 +1,5 @@
+import hashlib
+import hmac 
 import ugc_guard_python
 from ugc_guard_python.wrapper.content_wrapper import ContentWrapper, ReportContent, ReportPerson, Body, TextBody, MultiMediaBody, MultiMultiMediaBody, ContentType
 from typing import Optional, List, Dict, Any
@@ -17,6 +19,28 @@ class GuardClient:
         self.organization_id = organization_id
         configuration = ugc_guard_python.Configuration(host=self.base_url)
         self.api_client = ugc_guard_python.ApiClient(configuration)
+    
+    @staticmethod
+    def verify_signature(payload_body: dict, secret_token: str, signature_header: str) -> bool:
+        """Verify that the payload was sent from UGC Guard by validating SHA256.
+
+        Args:
+            payload_body: original request body to verify (request.body())
+            secret_token: UGC Guard webhook token (WEBHOOK_SECRET)
+            signature_header: header received from UGC Guard (x-action-signature)
+
+        returns:
+            bool: True if the signature is valid else False.
+        """
+        if not signature_header:
+           return False
+        hash_object = hmac.new(secret_token.encode('utf-8'), msg=payload_body, digestmod=hashlib.sha256)
+        expected_signature = "sha256=" + hash_object.hexdigest()
+        if not hmac.compare_digest(expected_signature, signature_header):
+            return False
+
+        return True
+    
 
     def report(
         self,
