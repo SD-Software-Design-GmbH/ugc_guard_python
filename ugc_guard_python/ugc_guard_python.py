@@ -1,8 +1,9 @@
 import hashlib
 import hmac 
+import json
 import ugc_guard_python
 from ugc_guard_python.wrapper.content_wrapper import ContentWrapper, ReportContent, ReportPerson, Body, TextBody, MultiMediaBody, MultiMultiMediaBody, ContentType
-from typing import Optional, List, Dict, Any
+from typing import Optional, Dict, Any
 from ugc_guard_python.models.body_create_magic_report import BodyCreateMagicReport
 from ugc_guard_python.models.report_create import ReportCreate
 from ugc_guard_python.models.reporter import Reporter
@@ -33,8 +34,9 @@ class GuardClient:
             bool: True if the signature is valid else False.
         """
         if not signature_header:
-           return False
-        hash_object = hmac.new(secret_token.encode('utf-8'), msg=payload_body, digestmod=hashlib.sha256)
+            return False
+        hash_object = hmac.new(secret_token.encode('utf-8'),
+                               msg=json.dumps(payload_body, sort_keys=True).encode("utf-8"), digestmod=hashlib.sha256)
         expected_signature = "sha256=" + hash_object.hexdigest()
         if not hmac.compare_digest(expected_signature, signature_header):
             return False
