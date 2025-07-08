@@ -1,9 +1,10 @@
 import hashlib
-import hmac 
-import json
+import hmac
 import ugc_guard_python
-from ugc_guard_python.wrapper.content_wrapper import ContentWrapper, ReportContent, ReportPerson, Body, TextBody, MultiMediaBody, MultiMultiMediaBody, ContentType
-from typing import Optional, Dict, Any
+import json
+from ugc_guard_python.wrapper.content_wrapper import ContentWrapper, ReportContent, ReportPerson, Body, TextBody, \
+    MultiMediaBody, MultiMultiMediaBody, ContentType
+from typing import Optional, List, Dict, Any
 from ugc_guard_python.models.body_create_magic_report import BodyCreateMagicReport
 from ugc_guard_python.models.report_create import ReportCreate
 from ugc_guard_python.models.reporter import Reporter
@@ -20,7 +21,7 @@ class GuardClient:
         self.organization_id = organization_id
         configuration = ugc_guard_python.Configuration(host=self.base_url)
         self.api_client = ugc_guard_python.ApiClient(configuration)
-    
+
     @staticmethod
     def verify_signature(payload_body: dict, secret_token: str, signature_header: str) -> bool:
         """Verify that the payload was sent from UGC Guard by validating SHA256.
@@ -42,16 +43,15 @@ class GuardClient:
             return False
 
         return True
-    
 
     def report(
-        self,
-        module_id: str,
-        module_secret: str,
-        type_id: str,
-        main_content: ContentWrapper,
-        reporter: ReportPerson,
-        options: Optional[Dict[str, Any]] = None
+            self,
+            module_id: str,
+            module_secret: str,
+            type_id: str,
+            main_content: ContentWrapper,
+            reporter: ReportPerson,
+            options: Optional[Dict[str, Any]] = None
     ) -> Any:
         options = options or {}
         description = options.get("description", "")
@@ -67,7 +67,7 @@ class GuardClient:
             main_content_create = self.convert_content_to_content_create(
                 main_content, module_id, module_secret
             )
-            
+
             if on_progress:
                 on_progress(1, total_steps)
 
@@ -139,7 +139,7 @@ class GuardClient:
         )
 
     def convert_content_to_content_create(
-        self, content_wrapper: ContentWrapper, module_id: str, module_secret: str
+            self, content_wrapper: ContentWrapper, module_id: str, module_secret: str
     ) -> ContentCreate:
         report_content = content_wrapper.content
         body = report_content.body
@@ -156,22 +156,32 @@ class GuardClient:
                 unique_partner_id=report_content.unique_partner_id
             )
         else:
-            files = self.upload_files(module_id, module_secret, content_wrapper)
-            if not files:
-                raise Exception("Failed to upload files.")
+            media_identifiers = []
+            if hasattr(body, 'urls') and not body.bytes:
+                # Proxied content, no need to upload files
+                media_identifiers = body.urls
+            else:
+                files = self.upload_files(module_id, module_secret, content_wrapper)
+                if not files:
+                    raise Exception("Failed to upload files.")
+                media_identifiers = [f.id for f in files if f.id]
+
+            if not media_identifiers:
+                raise Exception("No media identifiers found after upload.")
+
             return ContentCreate(
                 creator_id=content_wrapper.creator.unique_partner_id,
                 body=body.body,
-                body_type=type_,
+                body_type=body.content_type,
                 created_at=report_content.created_at,
                 extra_data=report_content.additional_data,
                 ip=report_content.ip,
                 unique_partner_id=report_content.unique_partner_id,
-                media_identifiers=[f.id for f in files if f.id]
+                media_identifiers=media_identifiers
             )
 
     def upload_files(
-        self, module_id: str, module_secret: str, content: ContentWrapper
+            self, module_id: str, module_secret: str, content: ContentWrapper
     ) -> list:
         body = content.content.body
         if body.content_type in [ContentType.OTHER, ContentType.TEXT]:
@@ -195,7 +205,7 @@ class GuardClient:
         return []
 
     def _actual_upload(
-        self, module_id: str, module_secret: str, multi_media_body: MultiMediaBody
+            self, module_id: str, module_secret: str, multi_media_body: MultiMediaBody
     ) -> Any:
         files_api = ugc_guard_python.FilesApi(self.api_client)
         return files_api.upload_file(
