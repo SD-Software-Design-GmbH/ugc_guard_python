@@ -157,7 +157,7 @@ class GuardClient:
             )
         else:
             media_identifiers = []
-            if hasattr(body, 'urls') and not body.bytes:
+            if hasattr(body, 'urls') and not hasattr(body, 'bytes'):
                 # Proxied content, no need to upload files
                 media_identifiers = body.urls
             else:
