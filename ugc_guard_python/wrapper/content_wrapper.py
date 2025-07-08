@@ -1,7 +1,9 @@
+import enum
 from typing import Optional, List, Union
 from datetime import datetime
 
-class ContentType:
+
+class ContentType(enum.Enum):
     TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
@@ -11,7 +13,7 @@ class ContentType:
 
 
 class Body:
-    def __init__(self, content_type: str, body: Union[str, List["MultiMediaBody"]]) -> None:
+    def __init__(self, content_type: ContentType, body: Union[str, List["MultiMediaBody"]]) -> None:
         if self.__class__ == Body:
             raise TypeError("Abstract classes can't be instantiated.")
         self.content_type = content_type
@@ -24,14 +26,30 @@ class TextBody(Body):
         self.text = text
 
 
+class ProxiedMultiMultiMediaBody(Body):
+    """
+    Proxied MultiMultiMediaBody is used to represent media that is proxied through URLS.
+    See https://docs.ugc-guard.com/docs/getting-started/files.html#_2-proxying-media
+    """
+
+    def __init__(self, content_type: ContentType, urls: list[str], body: str = "") -> None:
+        super().__init__(content_type=content_type, body=body)
+        self.urls = urls
+
+
 class MultiMediaBody(Body):
+    """
+    MultiMediaBody is used to represent media files that are uploaded directly.
+
+    See https://docs.ugc-guard.com/docs/getting-started/files.html#_1-uploading-files-to-ugc-guard
+    """
     def __init__(
-        self,
-        bytes_: bytes,
-        filename: str,
-        mime_type: str,
-        content_type: Optional[str] = None,
-        body: str = ""
+            self,
+            bytes_: bytes,
+            filename: str,
+            mime_type: str,
+            content_type: Optional[ContentType] = None,
+            body: str = ""
     ) -> None:
         content_type = content_type or self._detect_content_type(mime_type)
         super().__init__(content_type=content_type, body=body)
@@ -40,7 +58,7 @@ class MultiMediaBody(Body):
         self.mime_type = mime_type
 
     @staticmethod
-    def _detect_content_type(mime_type: str) -> str:
+    def _detect_content_type(mime_type: str) -> ContentType:
         if mime_type.startswith("image/"):
             return ContentType.IMAGE
         elif mime_type.startswith("video/"):
@@ -51,19 +69,19 @@ class MultiMediaBody(Body):
 
 
 class MultiMultiMediaBody(Body):
-    def __init__(self, media: List[MultiMediaBody], content_type: str = ContentType.IMAGE) -> None:
+    def __init__(self, media: List[MultiMediaBody], content_type: ContentType = ContentType.IMAGE) -> None:
         super().__init__(content_type=content_type, body=media)
         self.media = media
 
 
 class ReportContent:
     def __init__(
-        self,
-        unique_partner_id: str,
-        body: Union[TextBody, MultiMediaBody, MultiMultiMediaBody],
-        additional_data: Optional[dict] = None,
-        ip: Optional[str] = None,
-        created_at: Optional[datetime] = None
+            self,
+            unique_partner_id: str,
+            body: Union[TextBody, MultiMediaBody, MultiMultiMediaBody],
+            additional_data: Optional[dict] = None,
+            ip: Optional[str] = None,
+            created_at: Optional[datetime] = None
     ) -> None:
         self.unique_partner_id = unique_partner_id
         self.body = body
@@ -74,12 +92,12 @@ class ReportContent:
 
 class ReportPerson:
     def __init__(
-        self,
-        unique_partner_id: str,
-        name: Optional[str] = None,
-        email: Optional[str] = None,
-        phone: Optional[str] = None,
-        additional_data: Optional[dict] = None
+            self,
+            unique_partner_id: str,
+            name: Optional[str] = None,
+            email: Optional[str] = None,
+            phone: Optional[str] = None,
+            additional_data: Optional[dict] = None
     ) -> None:
         self.unique_partner_id = unique_partner_id
         self.name = name
