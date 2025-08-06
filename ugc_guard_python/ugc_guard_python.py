@@ -2,6 +2,8 @@ import hashlib
 import hmac
 import ugc_guard_python
 import json
+
+from ugc_guard_python import ReportCategory
 from ugc_guard_python.wrapper.content_wrapper import ContentWrapper, ReportContent, ReportPerson, Body, TextBody, \
     MultiMediaBody, MultiMultiMediaBody, ContentType
 from typing import Optional, List, Dict, Any
@@ -51,15 +53,29 @@ class GuardClient:
             type_id: str,
             main_content: ContentWrapper,
             reporter: ReportPerson,
-            options: Optional[Dict[str, Any]] = None
+            description: Optional[str] = "",
+            report_category: ReportCategory = ReportCategory.OTHER,
+            user_message: Optional[str] = "",
+            context: Optional[List[ContentWrapper]] = None,
+            on_progress: Optional[callable] = None,
+            channels: Optional[List[str]] = None,
     ) -> Any:
-        options = options or {}
-        description = options.get("description", "")
-        report_category = options.get("reportCategory", "other")
-        user_message = options.get("userMessage", "")
-        context = options.get("context", [])
-        on_progress = options.get("onProgress")
-        channels = options.get("channels", [])
+        """
+        Creates a report with the given main content and context.
+
+        Args:
+            module_id (str): The ID of the module.
+            module_secret (str): The secret for the module.
+            type_id (str): The type ID of the report.
+            main_content (ContentWrapper): The main content to be reported.
+            reporter (ReportPerson): The person reporting the content.
+            description (Optional[str]): Description of the report.
+            report_category (ReportCategory): Category of the report.
+            user_message (Optional[str]): Custom message from the user.
+            context (Optional[List[ContentWrapper]]): Additional context for the report.
+            on_progress (Optional[callable]): Callback function to track progress.
+            channels (Optional[List[str]]): Channels to send the report to.
+        """
 
         try:
             total_steps = len(context) + 2
@@ -183,6 +199,9 @@ class GuardClient:
     def upload_files(
             self, module_id: str, module_secret: str, content: ContentWrapper
     ) -> list:
+        """
+        Uploads files from the content to the UGC Guard service.
+        """
         body = content.content.body
         if body.content_type in [ContentType.OTHER, ContentType.TEXT]:
             raise Exception("Content must be of type MultiMediaBody to upload a file.")
@@ -214,8 +233,10 @@ class GuardClient:
             secret=module_secret
         )
 
-    def is_multi_media_body(self, body: Body) -> bool:
+    @staticmethod
+    def is_multi_media_body(body: Body) -> bool:
         return isinstance(body, MultiMediaBody)
 
-    def is_multi_multi_media_body(self, body: Body) -> bool:
+    @staticmethod
+    def is_multi_multi_media_body(body: Body) -> bool:
         return isinstance(body, MultiMultiMediaBody)

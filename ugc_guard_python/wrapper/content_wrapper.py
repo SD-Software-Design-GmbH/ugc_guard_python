@@ -21,6 +21,9 @@ class Body:
 
 
 class TextBody(Body):
+    """
+    TextBody is used to represent plain text content in a report.
+    """
     def __init__(self, text: str) -> None:
         super().__init__(content_type=ContentType.TEXT, body=text)
         self.text = text
@@ -43,6 +46,7 @@ class MultiMediaBody(Body):
 
     See https://docs.ugc-guard.com/docs/getting-started/files.html#_1-uploading-files-to-ugc-guard
     """
+
     def __init__(
             self,
             bytes_: bytes,
@@ -69,16 +73,25 @@ class MultiMediaBody(Body):
 
 
 class MultiMultiMediaBody(Body):
+    """
+    MultiMultiMediaBody is used to represent multiple media files that are uploaded directly.
+    """
     def __init__(self, media: List[MultiMediaBody], content_type: ContentType = ContentType.IMAGE) -> None:
         super().__init__(content_type=content_type, body=media)
         self.media = media
 
 
 class ReportContent:
+    """
+    Actual content of a report, which can be the "main content" or "context content".
+
+    The body of this content can be a [TextBody], [MultiMediaBody], [MultiMultiMediaBody] or [ProxiedMultiMultiMediaBody].
+    """
+
     def __init__(
             self,
             unique_partner_id: str,
-            body: Union[TextBody, MultiMediaBody, MultiMultiMediaBody],
+            body: Union[TextBody, MultiMediaBody, MultiMultiMediaBody, ProxiedMultiMultiMediaBody],
             additional_data: Optional[dict] = None,
             ip: Optional[str] = None,
             created_at: Optional[datetime] = None
@@ -91,6 +104,10 @@ class ReportContent:
 
 
 class ReportPerson:
+    """
+    A person who reported content or who created content in a report.
+    """
+
     def __init__(
             self,
             unique_partner_id: str,
@@ -107,6 +124,10 @@ class ReportPerson:
 
 
 class ContentWrapper:
+    """
+    Wraps the actual content and creator information for a content object of a report.
+    """
+
     def __init__(self, content: ReportContent, creator: ReportPerson) -> None:
         self.content = content
         self.creator = creator
