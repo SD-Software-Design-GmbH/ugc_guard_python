@@ -2,10 +2,10 @@
 name = "ugc_guard_python"
 version = "1.0.3"
 description = "UGC Guard API"
-authors = ["OpenAPI Generator Community <team@openapitools.org>"]
-license = "NoLicense"
+authors = ["UGC Guard Team <info@ugc-guard.com>"]
+license = "MIT"
 readme = "README.md"
-repository = "https://github.com/GIT_USER_ID/GIT_REPO_ID"
+repository = "https://github.com/SD-Software-Design-GmbH/ugc_guard_python"
 keywords = ["OpenAPI", "OpenAPI-Generator", "UGC Guard API"]
 include = ["ugc_guard_python/py.typed"]
 
