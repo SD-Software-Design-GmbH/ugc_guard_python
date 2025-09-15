@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ugc_guard_python"
-version = "1.0.2"
+version = "1.0.3"
 description = "UGC Guard API"
 authors = ["OpenAPI Generator Community <team@openapitools.org>"]
 license = "NoLicense"
