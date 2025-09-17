@@ -103,10 +103,10 @@ class GuardClient:
                     on_progress(i, total_steps)
                 report_context.append(content_create)
                 report_context_persons.append(
-                    self.convert_person_to_person_db(content_wrapper.creator, module_id)
+                    self.convert_person_to_person_db(content_wrapper.creator, module_id, module_secret)
                 )
 
-            reporter_person = self.convert_person_to_person_db(reporter, module_id)
+            reporter_person = self.convert_person_to_person_db(reporter, module_id, module_secret)
             reporter = Reporter(actual_instance=reporter_person)
 
             tmp = PersonDB(**main_content_sender.model_dump())
