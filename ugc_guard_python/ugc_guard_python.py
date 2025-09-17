@@ -90,7 +90,7 @@ class GuardClient:
                 on_progress(1, total_steps)
 
             main_content_sender = self.convert_person_to_person_db(
-                main_content.creator, module_id
+                main_content.creator, module_id, module_secret
             )
 
             report_context = []
