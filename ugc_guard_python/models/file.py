@@ -40,7 +40,8 @@ class File(BaseModel):
     uploaded_at: Optional[datetime] = None
     removed_at: Optional[datetime] = None
     module_id: StrictStr
-    __properties: ClassVar[List[str]] = ["id", "report_id", "content_id", "file_path", "file_type", "file_size", "blur_hash", "uploader_id", "in_s3", "secret", "uploaded_at", "removed_at", "module_id"]
+    person_id: Optional[StrictStr]
+    __properties: ClassVar[List[str]] = ["id", "report_id", "content_id", "file_path", "file_type", "file_size", "blur_hash", "uploader_id", "in_s3", "secret", "uploaded_at", "removed_at", "module_id", "person_id"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -106,6 +107,11 @@ class File(BaseModel):
         if self.removed_at is None and "removed_at" in self.model_fields_set:
             _dict['removed_at'] = None
 
+        # set to None if person_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.person_id is None and "person_id" in self.model_fields_set:
+            _dict['person_id'] = None
+
         return _dict
 
     @classmethod
@@ -130,7 +136,8 @@ class File(BaseModel):
             "secret": obj.get("secret"),
             "uploaded_at": obj.get("uploaded_at"),
             "removed_at": obj.get("removed_at"),
-            "module_id": obj.get("module_id")
+            "module_id": obj.get("module_id"),
+            "person_id": obj.get("person_id")
         })
         return _obj
 

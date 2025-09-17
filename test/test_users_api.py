@@ -26,6 +26,20 @@ class TestUsersApi(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
+    def test_change_password(self) -> None:
+        """Test case for change_password
+
+        Change Password
+        """
+        pass
+
+    def test_confirm_password_reset(self) -> None:
+        """Test case for confirm_password_reset
+
+        Confirm The Password Reset
+        """
+        pass
+
     def test_create_channel(self) -> None:
         """Test case for create_channel
 
@@ -37,6 +51,13 @@ class TestUsersApi(unittest.TestCase):
         """Test case for delete_channel
 
         Delete Channel
+        """
+        pass
+
+    def test_delete_user(self) -> None:
+        """Test case for delete_user
+
+        Delete User
         """
         pass
 
@@ -89,10 +110,24 @@ class TestUsersApi(unittest.TestCase):
         """
         pass
 
+    def test_get_user_otp_qr_code(self) -> None:
+        """Test case for get_user_otp_qr_code
+
+        Get User Otp Qr Code
+        """
+        pass
+
     def test_get_users_of_channel(self) -> None:
         """Test case for get_users_of_channel
 
         Get Users Of Channel
+        """
+        pass
+
+    def test_is_otp_active(self) -> None:
+        """Test case for is_otp_active
+
+        Check If Otp Is Active
         """
         pass
 
@@ -117,10 +152,52 @@ class TestUsersApi(unittest.TestCase):
         """
         pass
 
+    def test_perform_email_verification(self) -> None:
+        """Test case for perform_email_verification
+
+        Perform Email Verification
+        """
+        pass
+
+    def test_register_user(self) -> None:
+        """Test case for register_user
+
+        Register User
+        """
+        pass
+
+    def test_reset_password(self) -> None:
+        """Test case for reset_password
+
+        Reset Password
+        """
+        pass
+
+    def test_start_email_verification(self) -> None:
+        """Test case for start_email_verification
+
+        Start Email Verification
+        """
+        pass
+
+    def test_switch_otp(self) -> None:
+        """Test case for switch_otp
+
+        Switch Otp
+        """
+        pass
+
     def test_update_channel(self) -> None:
         """Test case for update_channel
 
         Update Channel
+        """
+        pass
+
+    def test_update_user(self) -> None:
+        """Test case for update_user
+
+        Update User
         """
         pass
 

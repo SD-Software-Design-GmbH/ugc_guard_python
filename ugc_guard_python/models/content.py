@@ -35,10 +35,11 @@ class Content(BaseModel):
     created_at: Optional[datetime] = None
     unique_partner_id: Optional[StrictStr] = None
     ip: Optional[StrictStr] = None
-    creator_id: StrictStr
+    creator_id: Optional[StrictStr]
+    type_id: Optional[StrictStr] = None
     id: Optional[StrictStr] = None
     report_id: StrictStr
-    __properties: ClassVar[List[str]] = ["body_type", "body", "media_identifiers", "extra_data", "created_at", "unique_partner_id", "ip", "creator_id", "id", "report_id"]
+    __properties: ClassVar[List[str]] = ["body_type", "body", "media_identifiers", "extra_data", "created_at", "unique_partner_id", "ip", "creator_id", "type_id", "id", "report_id"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -89,6 +90,16 @@ class Content(BaseModel):
         if self.ip is None and "ip" in self.model_fields_set:
             _dict['ip'] = None
 
+        # set to None if creator_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.creator_id is None and "creator_id" in self.model_fields_set:
+            _dict['creator_id'] = None
+
+        # set to None if type_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.type_id is None and "type_id" in self.model_fields_set:
+            _dict['type_id'] = None
+
         return _dict
 
     @classmethod
@@ -109,6 +120,7 @@ class Content(BaseModel):
             "unique_partner_id": obj.get("unique_partner_id"),
             "ip": obj.get("ip"),
             "creator_id": obj.get("creator_id"),
+            "type_id": obj.get("type_id"),
             "id": obj.get("id"),
             "report_id": obj.get("report_id")
         })

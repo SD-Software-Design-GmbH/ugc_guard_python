@@ -38,6 +38,8 @@ class TestUserWithMembershipState(unittest.TestCase):
                 id = '',
                 username = '',
                 email = '',
+                name = '',
+                avatar_id = '',
                 avatar_url = '',
                 membership_state = 'invited'
             )

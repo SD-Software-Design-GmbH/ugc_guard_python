@@ -39,6 +39,8 @@ class TestAIEvaluation(unittest.TestCase):
                 severity = 1.0,
                 explanation = '',
                 action_recommendation = '',
+                rule_id = '',
+                id = '',
                 report_id = '',
                 created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 ai_model = '',
@@ -46,6 +48,7 @@ class TestAIEvaluation(unittest.TestCase):
             )
         else:
             return AIEvaluation(
+                rule_id = '',
                 report_id = '',
                 ai_model = '',
         )

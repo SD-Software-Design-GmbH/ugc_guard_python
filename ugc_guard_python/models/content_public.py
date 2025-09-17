@@ -20,6 +20,7 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from ugc_guard_python.models.comment_with_creator import CommentWithCreator
 from ugc_guard_python.models.content_type import ContentType
 from ugc_guard_python.models.person import Person
 from typing import Optional, Set
@@ -36,10 +37,12 @@ class ContentPublic(BaseModel):
     created_at: Optional[datetime] = None
     unique_partner_id: Optional[StrictStr] = None
     ip: Optional[StrictStr] = None
-    creator_id: StrictStr
+    creator_id: Optional[StrictStr]
+    type_id: Optional[StrictStr] = None
     id: Optional[StrictStr] = None
     creator: Optional[Person] = None
-    __properties: ClassVar[List[str]] = ["body_type", "body", "media_identifiers", "extra_data", "created_at", "unique_partner_id", "ip", "creator_id", "id", "creator"]
+    comments: Optional[List[CommentWithCreator]] = None
+    __properties: ClassVar[List[str]] = ["body_type", "body", "media_identifiers", "extra_data", "created_at", "unique_partner_id", "ip", "creator_id", "type_id", "id", "creator", "comments"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -83,6 +86,13 @@ class ContentPublic(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of creator
         if self.creator:
             _dict['creator'] = self.creator.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in comments (list)
+        _items = []
+        if self.comments:
+            for _item_comments in self.comments:
+                if _item_comments:
+                    _items.append(_item_comments.to_dict())
+            _dict['comments'] = _items
         # set to None if body (nullable) is None
         # and model_fields_set contains the field
         if self.body is None and "body" in self.model_fields_set:
@@ -92,6 +102,16 @@ class ContentPublic(BaseModel):
         # and model_fields_set contains the field
         if self.ip is None and "ip" in self.model_fields_set:
             _dict['ip'] = None
+
+        # set to None if creator_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.creator_id is None and "creator_id" in self.model_fields_set:
+            _dict['creator_id'] = None
+
+        # set to None if type_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.type_id is None and "type_id" in self.model_fields_set:
+            _dict['type_id'] = None
 
         # set to None if creator (nullable) is None
         # and model_fields_set contains the field
@@ -118,8 +138,10 @@ class ContentPublic(BaseModel):
             "unique_partner_id": obj.get("unique_partner_id"),
             "ip": obj.get("ip"),
             "creator_id": obj.get("creator_id"),
+            "type_id": obj.get("type_id"),
             "id": obj.get("id"),
-            "creator": Person.from_dict(obj["creator"]) if obj.get("creator") is not None else None
+            "creator": Person.from_dict(obj["creator"]) if obj.get("creator") is not None else None,
+            "comments": [CommentWithCreator.from_dict(_item) for _item in obj["comments"]] if obj.get("comments") is not None else None
         })
         return _obj
 

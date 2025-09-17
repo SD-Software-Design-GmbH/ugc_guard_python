@@ -40,7 +40,7 @@ class TestOrganizationGroupings(unittest.TestCase):
                         id = '', 
                         name = '', 
                         description = '', 
-                        logo_url = '', 
+                        logo_id = '', 
                         enabled_ai_list = [
                             ''
                             ], 
@@ -53,7 +53,7 @@ class TestOrganizationGroupings(unittest.TestCase):
                         id = '', 
                         name = '', 
                         description = '', 
-                        logo_url = '', 
+                        logo_id = '', 
                         enabled_ai_list = [
                             ''
                             ], 
@@ -66,7 +66,7 @@ class TestOrganizationGroupings(unittest.TestCase):
                         id = '', 
                         name = '', 
                         description = '', 
-                        logo_url = '', 
+                        logo_id = '', 
                         enabled_ai_list = [
                             ''
                             ], 
@@ -79,7 +79,7 @@ class TestOrganizationGroupings(unittest.TestCase):
                         id = '', 
                         name = '', 
                         description = '', 
-                        logo_url = '', 
+                        logo_id = '', 
                         enabled_ai_list = [
                             ''
                             ], 

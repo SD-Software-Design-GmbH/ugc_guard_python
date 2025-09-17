@@ -38,7 +38,7 @@ class TestOrgWithMembershipState(unittest.TestCase):
                 id = '',
                 name = '',
                 description = '',
-                logo_url = '',
+                logo_id = '',
                 enabled_ai_list = [
                     ''
                     ],
@@ -49,6 +49,7 @@ class TestOrgWithMembershipState(unittest.TestCase):
         else:
             return OrgWithMembershipState(
                 name = '',
+                logo_id = '',
                 membership_state = 'invited',
         )
         """

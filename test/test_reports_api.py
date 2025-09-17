@@ -26,6 +26,13 @@ class TestReportsApi(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
+    def test_add_channel_to_report(self) -> None:
+        """Test case for add_channel_to_report
+
+        Add Channel To Report
+        """
+        pass
+
     def test_create_magic_report(self) -> None:
         """Test case for create_magic_report
 
@@ -47,10 +54,24 @@ class TestReportsApi(unittest.TestCase):
         """
         pass
 
+    def test_export_report_as_pdf(self) -> None:
+        """Test case for export_report_as_pdf
+
+        Export Report As Pdf
+        """
+        pass
+
     def test_get_all_reports(self) -> None:
         """Test case for get_all_reports
 
         Get All Reports
+        """
+        pass
+
+    def test_get_channels_of_report(self) -> None:
+        """Test case for get_channels_of_report
+
+        Get Channels Of Report
         """
         pass
 
@@ -82,6 +103,13 @@ class TestReportsApi(unittest.TestCase):
         """
         pass
 
+    def test_get_related_reports(self) -> None:
+        """Test case for get_related_reports
+
+        Get Related Reports
+        """
+        pass
+
     def test_get_report_by_id(self) -> None:
         """Test case for get_report_by_id
 
@@ -100,6 +128,13 @@ class TestReportsApi(unittest.TestCase):
         """Test case for reject_report
 
         Reject Report
+        """
+        pass
+
+    def test_remove_channel_from_report(self) -> None:
+        """Test case for remove_channel_from_report
+
+        Remove Channel From Report
         """
         pass
 

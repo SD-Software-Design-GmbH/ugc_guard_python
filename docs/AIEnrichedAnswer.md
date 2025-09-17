@@ -6,6 +6,8 @@ Represents an enriched answer with all evaluations for a report, and all enabled
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**guards** | [**List[FilledGuard]**](FilledGuard.md) |  | [optional] 
+**guard_evaluations** | [**List[FilledGuardEvaluation]**](FilledGuardEvaluation.md) |  | [optional] 
 **evaluations** | [**List[AIEvaluation]**](AIEvaluation.md) |  | [optional] 
 **ai_models** | [**List[AiModel]**](AiModel.md) |  | [optional] 
 

@@ -47,7 +47,8 @@ class TestFile(unittest.TestCase):
                 secret = '',
                 uploaded_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 removed_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
-                module_id = ''
+                module_id = '',
+                person_id = ''
             )
         else:
             return File(
@@ -55,6 +56,7 @@ class TestFile(unittest.TestCase):
                 content_id = '',
                 uploader_id = '',
                 module_id = '',
+                person_id = '',
         )
         """
 

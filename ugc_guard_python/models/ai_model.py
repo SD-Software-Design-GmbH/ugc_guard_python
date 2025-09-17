@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, StrictBool, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -31,7 +31,10 @@ class AiModel(BaseModel):
     model: StrictStr
     description: Optional[StrictStr] = None
     logo: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["name", "enabled", "model", "description", "logo"]
+    costs_per_factor_input_tokens: Optional[Union[StrictFloat, StrictInt]] = 0.0
+    costs_per_factor_output_tokens: Optional[Union[StrictFloat, StrictInt]] = 0.0
+    factor_tokens: Optional[StrictInt] = 1000
+    __properties: ClassVar[List[str]] = ["name", "enabled", "model", "description", "logo", "costs_per_factor_input_tokens", "costs_per_factor_output_tokens", "factor_tokens"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -98,7 +101,10 @@ class AiModel(BaseModel):
             "enabled": obj.get("enabled") if obj.get("enabled") is not None else False,
             "model": obj.get("model"),
             "description": obj.get("description"),
-            "logo": obj.get("logo")
+            "logo": obj.get("logo"),
+            "costs_per_factor_input_tokens": obj.get("costs_per_factor_input_tokens") if obj.get("costs_per_factor_input_tokens") is not None else 0.0,
+            "costs_per_factor_output_tokens": obj.get("costs_per_factor_output_tokens") if obj.get("costs_per_factor_output_tokens") is not None else 0.0,
+            "factor_tokens": obj.get("factor_tokens") if obj.get("factor_tokens") is not None else 1000
         })
         return _obj
 

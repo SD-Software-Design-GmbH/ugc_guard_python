@@ -7,6 +7,9 @@ Method | HTTP request | Description
 [**create_action**](ActionsApi.md#create_action) | **POST** /actions/ | Create Action
 [**delete_action**](ActionsApi.md#delete_action) | **DELETE** /actions/{action_id} | Delete Action
 [**get_action_by_id**](ActionsApi.md#get_action_by_id) | **GET** /actions/{action_id} | Get Action By Id
+[**get_action_history**](ActionsApi.md#get_action_history) | **GET** /actions/{action_id}/history | Get Perform History Of Action
+[**get_action_history_by_content**](ActionsApi.md#get_action_history_by_content) | **GET** /actions/history/content/{content_id} | Get Action History By Content Api
+[**get_action_history_by_person**](ActionsApi.md#get_action_history_by_person) | **GET** /actions/history/person/{person_id} | Get Action History By Person Api
 [**get_all_actions_of_type**](ActionsApi.md#get_all_actions_of_type) | **GET** /actions/ | Get All Actions Of Type
 [**get_user_type_action_by_id**](ActionsApi.md#get_user_type_action_by_id) | **GET** /actions/user_type/{module_id} | Get User Type Action By Id
 [**perform_action**](ActionsApi.md#perform_action) | **GET** /actions/{action_id}/perform | Perform Action
@@ -22,6 +25,7 @@ Create a new action.
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -35,6 +39,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -66,7 +76,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -92,6 +102,7 @@ Delete an action by its ID.
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -105,6 +116,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -136,7 +153,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -162,6 +179,7 @@ Get an action by its ID.
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -175,6 +193,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -206,7 +230,250 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**404** | Not found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_action_history**
+> PaginatedResultExtendedActionHistory get_action_history(action_id, offset=offset, limit=limit)
+
+Get Perform History Of Action
+
+Get the perform history of an action.
+
+### Example
+
+* OAuth Authentication (OAuth2PasswordBearer):
+
+```python
+import ugc_guard_python
+from ugc_guard_python.models.paginated_result_extended_action_history import PaginatedResultExtendedActionHistory
+from ugc_guard_python.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = ugc_guard_python.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
+# Enter a context with an instance of the API client
+with ugc_guard_python.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = ugc_guard_python.ActionsApi(api_client)
+    action_id = 'action_id_example' # str | 
+    offset = 0 # int |  (optional) (default to 0)
+    limit = 100 # int |  (optional) (default to 100)
+
+    try:
+        # Get Perform History Of Action
+        api_response = api_instance.get_action_history(action_id, offset=offset, limit=limit)
+        print("The response of ActionsApi->get_action_history:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ActionsApi->get_action_history: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **action_id** | **str**|  | 
+ **offset** | **int**|  | [optional] [default to 0]
+ **limit** | **int**|  | [optional] [default to 100]
+
+### Return type
+
+[**PaginatedResultExtendedActionHistory**](PaginatedResultExtendedActionHistory.md)
+
+### Authorization
+
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**404** | Not found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_action_history_by_content**
+> PaginatedResultExtendedActionHistory get_action_history_by_content(content_id, offset=offset, limit=limit)
+
+Get Action History By Content Api
+
+Get perform history of actions on content by id
+
+### Example
+
+* OAuth Authentication (OAuth2PasswordBearer):
+
+```python
+import ugc_guard_python
+from ugc_guard_python.models.paginated_result_extended_action_history import PaginatedResultExtendedActionHistory
+from ugc_guard_python.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = ugc_guard_python.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
+# Enter a context with an instance of the API client
+with ugc_guard_python.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = ugc_guard_python.ActionsApi(api_client)
+    content_id = 'content_id_example' # str | 
+    offset = 0 # int |  (optional) (default to 0)
+    limit = 100 # int |  (optional) (default to 100)
+
+    try:
+        # Get Action History By Content Api
+        api_response = api_instance.get_action_history_by_content(content_id, offset=offset, limit=limit)
+        print("The response of ActionsApi->get_action_history_by_content:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ActionsApi->get_action_history_by_content: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **content_id** | **str**|  | 
+ **offset** | **int**|  | [optional] [default to 0]
+ **limit** | **int**|  | [optional] [default to 100]
+
+### Return type
+
+[**PaginatedResultExtendedActionHistory**](PaginatedResultExtendedActionHistory.md)
+
+### Authorization
+
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**404** | Not found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_action_history_by_person**
+> PaginatedResultExtendedActionHistory get_action_history_by_person(person_id, offset=offset, limit=limit)
+
+Get Action History By Person Api
+
+Get perform history of actions on person by person id
+
+### Example
+
+* OAuth Authentication (OAuth2PasswordBearer):
+
+```python
+import ugc_guard_python
+from ugc_guard_python.models.paginated_result_extended_action_history import PaginatedResultExtendedActionHistory
+from ugc_guard_python.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = ugc_guard_python.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
+# Enter a context with an instance of the API client
+with ugc_guard_python.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = ugc_guard_python.ActionsApi(api_client)
+    person_id = 'person_id_example' # str | 
+    offset = 0 # int |  (optional) (default to 0)
+    limit = 100 # int |  (optional) (default to 100)
+
+    try:
+        # Get Action History By Person Api
+        api_response = api_instance.get_action_history_by_person(person_id, offset=offset, limit=limit)
+        print("The response of ActionsApi->get_action_history_by_person:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ActionsApi->get_action_history_by_person: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **person_id** | **str**|  | 
+ **offset** | **int**|  | [optional] [default to 0]
+ **limit** | **int**|  | [optional] [default to 100]
+
+### Return type
+
+[**PaginatedResultExtendedActionHistory**](PaginatedResultExtendedActionHistory.md)
+
+### Authorization
+
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -232,6 +499,7 @@ Get all actions of a type.
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -245,6 +513,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -280,7 +554,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -306,6 +580,7 @@ Gets all actions that belong to the user type of the module
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -319,6 +594,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -350,7 +631,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -368,7 +649,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **perform_action**
-> Action perform_action(action_id, content_id, on_user=on_user)
+> Dict[str, object] perform_action(action_id, content_id, on_user=on_user)
 
 Perform Action
 
@@ -376,10 +657,10 @@ Perform an action.
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
-from ugc_guard_python.models.action import Action
 from ugc_guard_python.rest import ApiException
 from pprint import pprint
 
@@ -389,6 +670,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -420,11 +707,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Action**](Action.md)
+**Dict[str, object]**
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -450,6 +737,7 @@ Update an action.
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -463,6 +751,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -494,7 +788,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 

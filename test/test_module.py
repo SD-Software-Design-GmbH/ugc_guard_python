@@ -38,8 +38,10 @@ class TestModule(unittest.TestCase):
                 send_mail_on_report = True,
                 send_mail_on_report_to_user = True,
                 send_mail_on_resolved_report_to_user = True,
+                send_mail_on_escalation_to_creators = True,
+                send_mail_on_rejection_to_creator = True,
                 id = '',
-                logo_url = '',
+                logo_id = '',
                 name = '',
                 description = '',
                 organization_id = '',
@@ -47,6 +49,7 @@ class TestModule(unittest.TestCase):
             )
         else:
             return Module(
+                logo_id = '',
                 name = '',
                 organization_id = '',
         )

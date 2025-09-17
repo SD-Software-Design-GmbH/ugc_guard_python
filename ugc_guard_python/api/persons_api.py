@@ -16,7 +16,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
+from pydantic import StrictBool, StrictStr
 from typing import Optional
 from ugc_guard_python.models.anonymous_person import AnonymousPerson
 from ugc_guard_python.models.person_db import PersonDB
@@ -351,7 +351,7 @@ class PersonsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> PersonDB:
+    ) -> bool:
         """Delete Person
 
         Delete a person by its ID.
@@ -389,7 +389,7 @@ class PersonsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PersonDB",
+            '200': "bool",
             '404': None,
             '422': "HTTPValidationError",
         }
@@ -420,7 +420,7 @@ class PersonsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[PersonDB]:
+    ) -> ApiResponse[bool]:
         """Delete Person
 
         Delete a person by its ID.
@@ -458,7 +458,7 @@ class PersonsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PersonDB",
+            '200': "bool",
             '404': None,
             '422': "HTTPValidationError",
         }
@@ -527,7 +527,7 @@ class PersonsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PersonDB",
+            '200': "bool",
             '404': None,
             '422': "HTTPValidationError",
         }
@@ -581,6 +581,7 @@ class PersonsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'OAuth2PasswordBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -847,6 +848,7 @@ class PersonsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'OAuth2PasswordBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -1426,6 +1428,7 @@ class PersonsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'OAuth2PasswordBearer'
         ]
 
         return self.api_client.param_serialize(

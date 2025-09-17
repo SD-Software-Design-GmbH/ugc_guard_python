@@ -48,6 +48,7 @@ class TestAllContentResponse(unittest.TestCase):
                     unique_partner_id = '', 
                     ip = '', 
                     creator_id = '', 
+                    type_id = '', 
                     id = '', 
                     creator = ugc_guard_python.models.person.Person(
                         id = '', 
@@ -58,7 +59,15 @@ class TestAllContentResponse(unittest.TestCase):
                         phone = '', 
                         extra_data = {
                             'key' : null
-                            }, ), ),
+                            }, ), 
+                    comments = [
+                        ugc_guard_python.models.comment_with_creator.CommentWithCreator(
+                            id = '', 
+                            body = '', 
+                            created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                            creator_id = '', 
+                            show_public = True, )
+                        ], ),
                 context = [
                     ugc_guard_python.models.content_public.ContentPublic(
                         body_type = 'text', 
@@ -73,6 +82,7 @@ class TestAllContentResponse(unittest.TestCase):
                         unique_partner_id = '', 
                         ip = '', 
                         creator_id = '', 
+                        type_id = '', 
                         id = '', 
                         creator = ugc_guard_python.models.person.Person(
                             id = '', 
@@ -83,7 +93,35 @@ class TestAllContentResponse(unittest.TestCase):
                             phone = '', 
                             extra_data = {
                                 'key' : null
-                                }, ), )
+                                }, ), 
+                        comments = [
+                            ugc_guard_python.models.comment_with_creator.CommentWithCreator(
+                                id = '', 
+                                body = '', 
+                                created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                                creator_id = '', 
+                                show_public = True, )
+                            ], )
+                    ],
+                history = [
+                    ugc_guard_python.models.action_history.ActionHistory(
+                        id = '', 
+                        action_id = '', 
+                        content_unique_partner_id = '', 
+                        person_id = '', 
+                        report_id = '', 
+                        performed_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                        performed_by_id = '', 
+                        success = True, )
+                    ],
+                types = [
+                    ugc_guard_python.models.type.Type(
+                        id = '', 
+                        name = '', 
+                        description = '', 
+                        module_id = '', 
+                        is_user_type = True, 
+                        action_secret = '', )
                     ]
             )
         else:
@@ -102,6 +140,7 @@ class TestAllContentResponse(unittest.TestCase):
                         unique_partner_id = '', 
                         ip = '', 
                         creator_id = '', 
+                        type_id = '', 
                         id = '', 
                         creator = ugc_guard_python.models.person.Person(
                             id = '', 
@@ -112,7 +151,15 @@ class TestAllContentResponse(unittest.TestCase):
                             phone = '', 
                             extra_data = {
                                 'key' : null
-                                }, ), )
+                                }, ), 
+                        comments = [
+                            ugc_guard_python.models.comment_with_creator.CommentWithCreator(
+                                id = '', 
+                                body = '', 
+                                created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                                creator_id = '', 
+                                show_public = True, )
+                            ], )
                     ],
         )
         """

@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **email** | **str** |  | [optional] 
 **phone** | **str** |  | [optional] 
 **extra_data** | **Dict[str, object]** |  | [optional] 
+**media_identifiers** | **List[str]** |  | [optional] 
 
 ## Example
 

@@ -4,11 +4,89 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**get_ai_usage_costs_for_organization**](AiApi.md#get_ai_usage_costs_for_organization) | **GET** /ai/usage/{organization_id}/cost | Get The Ai Costs For Organization
 [**get_all_ai_models**](AiApi.md#get_all_ai_models) | **GET** /ai/models | Get All Ai Models
 [**get_all_ai_usage_for_organization**](AiApi.md#get_all_ai_usage_for_organization) | **GET** /ai/usage/{organization_id}/all | Get All Ai Usage For Organization
 [**get_all_monthly_ai_usage_for_organization**](AiApi.md#get_all_monthly_ai_usage_for_organization) | **GET** /ai/usage/{organization_id} | Get All Monthly Ai Usage For Organization
 [**get_monthly_ai_usage_for_organization_model**](AiApi.md#get_monthly_ai_usage_for_organization_model) | **GET** /ai/usage/{organization_id}/{ai_model} | Get Monthly Ai Usage For Organization And Model
 
+
+# **get_ai_usage_costs_for_organization**
+> AiUsageCosts get_ai_usage_costs_for_organization(organization_id)
+
+Get The Ai Costs For Organization
+
+Get the costs of all Models.
+
+### Example
+
+* OAuth Authentication (OAuth2PasswordBearer):
+
+```python
+import ugc_guard_python
+from ugc_guard_python.models.ai_usage_costs import AiUsageCosts
+from ugc_guard_python.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = ugc_guard_python.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
+# Enter a context with an instance of the API client
+with ugc_guard_python.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = ugc_guard_python.AiApi(api_client)
+    organization_id = 'organization_id_example' # str | 
+
+    try:
+        # Get The Ai Costs For Organization
+        api_response = api_instance.get_ai_usage_costs_for_organization(organization_id)
+        print("The response of AiApi->get_ai_usage_costs_for_organization:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AiApi->get_ai_usage_costs_for_organization: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **organization_id** | **str**|  | 
+
+### Return type
+
+[**AiUsageCosts**](AiUsageCosts.md)
+
+### Authorization
+
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**404** | Not found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_all_ai_models**
 > List[AiModel] get_all_ai_models()
@@ -19,6 +97,7 @@ Get a list of all available AI models.
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -32,6 +111,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -59,7 +144,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -84,6 +169,7 @@ Get all AI usage for a specific organization.
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -97,6 +183,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -128,7 +220,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -154,6 +246,7 @@ Get all monthly AI usage for a specific organization.
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -167,6 +260,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -200,7 +299,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -226,6 +325,7 @@ Get monthly AI usage for a specific organization and AI model.
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -239,6 +339,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -274,7 +380,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 

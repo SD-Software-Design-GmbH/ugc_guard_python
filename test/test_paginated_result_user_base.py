@@ -41,6 +41,8 @@ class TestPaginatedResultUserBase(unittest.TestCase):
                         id = '', 
                         username = '', 
                         email = '', 
+                        name = '', 
+                        avatar_id = '', 
                         avatar_url = '', )
                     ]
             )
@@ -52,6 +54,8 @@ class TestPaginatedResultUserBase(unittest.TestCase):
                         id = '', 
                         username = '', 
                         email = '', 
+                        name = '', 
+                        avatar_id = '', 
                         avatar_url = '', )
                     ],
         )

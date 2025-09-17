@@ -29,13 +29,15 @@ class Module(BaseModel):
     send_mail_on_report: Optional[StrictBool] = False
     send_mail_on_report_to_user: Optional[StrictBool] = False
     send_mail_on_resolved_report_to_user: Optional[StrictBool] = False
+    send_mail_on_escalation_to_creators: Optional[StrictBool] = False
+    send_mail_on_rejection_to_creator: Optional[StrictBool] = False
     id: Optional[StrictStr] = None
-    logo_url: Optional[StrictStr] = None
+    logo_id: Optional[StrictStr]
     name: StrictStr
     description: Optional[StrictStr] = None
     organization_id: StrictStr
     auto_ai_validation: Optional[StrictBool] = False
-    __properties: ClassVar[List[str]] = ["send_mail_on_report", "send_mail_on_report_to_user", "send_mail_on_resolved_report_to_user", "id", "logo_url", "name", "description", "organization_id", "auto_ai_validation"]
+    __properties: ClassVar[List[str]] = ["send_mail_on_report", "send_mail_on_report_to_user", "send_mail_on_resolved_report_to_user", "send_mail_on_escalation_to_creators", "send_mail_on_rejection_to_creator", "id", "logo_id", "name", "description", "organization_id", "auto_ai_validation"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -76,6 +78,11 @@ class Module(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if logo_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.logo_id is None and "logo_id" in self.model_fields_set:
+            _dict['logo_id'] = None
+
         return _dict
 
     @classmethod
@@ -91,8 +98,10 @@ class Module(BaseModel):
             "send_mail_on_report": obj.get("send_mail_on_report") if obj.get("send_mail_on_report") is not None else False,
             "send_mail_on_report_to_user": obj.get("send_mail_on_report_to_user") if obj.get("send_mail_on_report_to_user") is not None else False,
             "send_mail_on_resolved_report_to_user": obj.get("send_mail_on_resolved_report_to_user") if obj.get("send_mail_on_resolved_report_to_user") is not None else False,
+            "send_mail_on_escalation_to_creators": obj.get("send_mail_on_escalation_to_creators") if obj.get("send_mail_on_escalation_to_creators") is not None else False,
+            "send_mail_on_rejection_to_creator": obj.get("send_mail_on_rejection_to_creator") if obj.get("send_mail_on_rejection_to_creator") is not None else False,
             "id": obj.get("id"),
-            "logo_url": obj.get("logo_url"),
+            "logo_id": obj.get("logo_id"),
             "name": obj.get("name"),
             "description": obj.get("description"),
             "organization_id": obj.get("organization_id"),

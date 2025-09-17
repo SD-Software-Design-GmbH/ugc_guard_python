@@ -39,7 +39,10 @@ class TestAiModel(unittest.TestCase):
                 enabled = True,
                 model = '',
                 description = '',
-                logo = ''
+                logo = '',
+                costs_per_factor_input_tokens = 1.337,
+                costs_per_factor_output_tokens = 1.337,
+                factor_tokens = 56
             )
         else:
             return AiModel(

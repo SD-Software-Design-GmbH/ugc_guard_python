@@ -46,7 +46,8 @@ class TestContentCreate(unittest.TestCase):
                 created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 unique_partner_id = '',
                 ip = '',
-                creator_id = ''
+                creator_id = '',
+                type_id = ''
             )
         else:
             return ContentCreate(

@@ -33,7 +33,8 @@ class Person(BaseModel):
     email: Optional[StrictStr] = None
     phone: Optional[StrictStr] = None
     extra_data: Optional[Dict[str, Any]] = None
-    __properties: ClassVar[List[str]] = ["id", "module_id", "unique_partner_id", "name", "email", "phone", "extra_data"]
+    media_identifiers: Optional[List[StrictStr]] = None
+    __properties: ClassVar[List[str]] = ["id", "module_id", "unique_partner_id", "name", "email", "phone", "extra_data", "media_identifiers"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -92,7 +93,8 @@ class Person(BaseModel):
             "name": obj.get("name"),
             "email": obj.get("email"),
             "phone": obj.get("phone"),
-            "extra_data": obj.get("extra_data")
+            "extra_data": obj.get("extra_data"),
+            "media_identifiers": obj.get("media_identifiers")
         })
         return _obj
 

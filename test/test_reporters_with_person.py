@@ -49,7 +49,10 @@ class TestReportersWithPerson(unittest.TestCase):
                     phone = '', 
                     extra_data = {
                         'key' : null
-                        }, )
+                        }, 
+                    media_identifiers = [
+                        ''
+                        ], )
             )
         else:
             return ReportersWithPerson(

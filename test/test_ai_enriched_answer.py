@@ -35,12 +35,81 @@ class TestAIEnrichedAnswer(unittest.TestCase):
         model = AIEnrichedAnswer()
         if include_optional:
             return AIEnrichedAnswer(
+                guards = [
+                    ugc_guard_python.models.filled_guard.FilledGuard(
+                        guard = ugc_guard_python.models.guard.Guard(
+                            id = '', 
+                            created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                            updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                            name = '', 
+                            description = '', 
+                            enabled = True, 
+                            module_id = '', 
+                            type_id = '', 
+                            on_fail_action = 'block', ), 
+                        rules = [
+                            ugc_guard_python.models.rule.Rule(
+                                id = '', 
+                                created_at = '', 
+                                updated_at = '', 
+                                name = '', 
+                                description = '', 
+                                organization_id = '', 
+                                is_deterministic = True, 
+                                enabled = True, 
+                                deterministic_options_id = '', 
+                                non_deterministic_options_id = '', )
+                            ], 
+                        rule_connections = [
+                            ugc_guard_python.models.guard_rule_connection.GuardRuleConnection(
+                                guard_id = '', 
+                                rule_id = '', 
+                                running_order = 56, )
+                            ], )
+                    ],
+                guard_evaluations = [
+                    ugc_guard_python.models.filled_guard_evaluation.FilledGuardEvaluation(
+                        guard_evaluation = ugc_guard_python.models.guard_evaluation.GuardEvaluation(
+                            id = '', 
+                            created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                            ongoing = True, 
+                            passed = True, 
+                            task_id = '', 
+                            guard_id = '', 
+                            report_id = '', 
+                            severity = 56, ), 
+                        ai_evaluations = [
+                            ugc_guard_python.models.ai_evaluation.AIEvaluation(
+                                ai_selected_category = 'hate_speech', 
+                                severity = 1.0, 
+                                explanation = '', 
+                                action_recommendation = '', 
+                                rule_id = '', 
+                                id = '', 
+                                report_id = '', 
+                                created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                                ai_model = '', 
+                                generated_tokens = 56, )
+                            ], 
+                        deterministic_evaluations = [
+                            ugc_guard_python.models.deterministic_evaluation.DeterministicEvaluation(
+                                id = '', 
+                                rule_id = '', 
+                                report_id = '', 
+                                matched_words = [
+                                    ''
+                                    ], 
+                                is_match = True, )
+                            ], )
+                    ],
                 evaluations = [
                     ugc_guard_python.models.ai_evaluation.AIEvaluation(
                         ai_selected_category = 'hate_speech', 
                         severity = 1.0, 
                         explanation = '', 
                         action_recommendation = '', 
+                        rule_id = '', 
+                        id = '', 
                         report_id = '', 
                         created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                         ai_model = '', 
@@ -52,7 +121,10 @@ class TestAIEnrichedAnswer(unittest.TestCase):
                         enabled = True, 
                         model = '', 
                         description = '', 
-                        logo = '', )
+                        logo = '', 
+                        costs_per_factor_input_tokens = 1.337, 
+                        costs_per_factor_output_tokens = 1.337, 
+                        factor_tokens = 56, )
                     ]
             )
         else:

@@ -30,6 +30,7 @@ Accepts an invitation to the organization
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -42,6 +43,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -73,7 +80,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -99,6 +106,7 @@ Changes the membership state of the user in the organization
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -112,6 +120,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -147,7 +161,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -173,6 +187,7 @@ Creates a new organization
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -186,6 +201,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -217,7 +238,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -243,6 +264,7 @@ Deletes the organization
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -255,6 +277,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -286,7 +314,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -312,6 +340,7 @@ Denies an invitation to the organization
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -324,6 +353,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -355,7 +390,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -381,6 +416,7 @@ Returns the membership state of the user in the organization
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -394,6 +430,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -425,7 +467,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -451,6 +493,7 @@ Returns all organizations the current user is invited, member or admin of
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -464,6 +507,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -497,7 +546,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -523,6 +572,7 @@ Returns all organizations the current user is invited, member or admin of, group
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -536,6 +586,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -569,7 +625,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -595,6 +651,7 @@ Returns the organization
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -608,6 +665,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -639,7 +702,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -665,6 +728,7 @@ Returns all members of the organization
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -678,6 +742,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -715,7 +785,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -741,6 +811,7 @@ Invites a user to the organization
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -754,6 +825,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -787,7 +864,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -813,6 +890,7 @@ Invites a user to the organization by email
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -825,6 +903,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -858,7 +942,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -884,6 +968,7 @@ Leaves the organization
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -896,6 +981,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -927,7 +1018,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -953,6 +1044,7 @@ Revokes a user from the organization
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -965,6 +1057,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -998,7 +1096,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -1024,6 +1122,7 @@ Updates the organization
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -1037,6 +1136,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -1070,7 +1175,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 

@@ -47,6 +47,7 @@ class TestContent(unittest.TestCase):
                 unique_partner_id = '',
                 ip = '',
                 creator_id = '',
+                type_id = '',
                 id = '',
                 report_id = ''
             )

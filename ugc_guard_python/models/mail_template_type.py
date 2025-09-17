@@ -29,6 +29,8 @@ class MailTemplateType(str, Enum):
     REPORT_CREATED_ADMIN = 'report_created_admin'
     REPORT_CREATED_USER = 'report_created_user'
     REPORT_RESOLVED_USER = 'report_resolved_user'
+    REPORT_ESCALATED_CREATORS = 'report_escalated_creators'
+    REPORT_REJECTED_CREATOR = 'report_rejected_creator'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

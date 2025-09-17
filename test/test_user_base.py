@@ -38,6 +38,8 @@ class TestUserBase(unittest.TestCase):
                 id = '',
                 username = '',
                 email = '',
+                name = '',
+                avatar_id = '',
                 avatar_url = ''
             )
         else:

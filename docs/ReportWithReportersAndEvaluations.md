@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **secret** | **str** |  | [optional] 
 **reporters** | [**List[ReportersWithPerson]**](ReportersWithPerson.md) |  | [optional] [default to []]
 **evaluations** | [**List[AIEvaluation]**](AIEvaluation.md) |  | [optional] [default to []]
+**guard_evaluations** | [**List[GuardEvaluation]**](GuardEvaluation.md) |  | [optional] [default to []]
 
 ## Example
 

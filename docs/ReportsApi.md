@@ -4,20 +4,104 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**add_channel_to_report**](ReportsApi.md#add_channel_to_report) | **POST** /reports/{report_id}/channels | Add Channel To Report
 [**create_magic_report**](ReportsApi.md#create_magic_report) | **POST** /reports/magic | Create Magic Report
 [**create_report**](ReportsApi.md#create_report) | **POST** /reports/ | Create Report
 [**escalate_report**](ReportsApi.md#escalate_report) | **GET** /reports/{report_id}/escalate | Escalate Report
+[**export_report_as_pdf**](ReportsApi.md#export_report_as_pdf) | **GET** /reports/{report_id}/exportPDF | Export Report As Pdf
 [**get_all_reports**](ReportsApi.md#get_all_reports) | **GET** /reports/all | Get All Reports
+[**get_channels_of_report**](ReportsApi.md#get_channels_of_report) | **GET** /reports/{report_id}/channels | Get Channels Of Report
 [**get_content_of_report**](ReportsApi.md#get_content_of_report) | **GET** /reports/{report_id}/content | Get Content Of Report
 [**get_enriched_evaluations_of_report**](ReportsApi.md#get_enriched_evaluations_of_report) | **GET** /reports/{report_id}/enriched_evaluations | Get Enriched Evaluations Of Report
 [**get_evaluations_of_report**](ReportsApi.md#get_evaluations_of_report) | **GET** /reports/{report_id}/evaluations | Get Evaluations Of Report
 [**get_my_reports**](ReportsApi.md#get_my_reports) | **GET** /reports/my/{module_id} | Get My Reports
+[**get_related_reports**](ReportsApi.md#get_related_reports) | **GET** /reports/{report_id}/related | Get Related Reports
 [**get_report_by_id**](ReportsApi.md#get_report_by_id) | **GET** /reports/{report_id} | Get Report By Id
 [**get_reporters_of_report**](ReportsApi.md#get_reporters_of_report) | **GET** /reports/{report_id}/reporters | Get Reporters Of Report
 [**reject_report**](ReportsApi.md#reject_report) | **GET** /reports/{report_id}/reject | Reject Report
+[**remove_channel_from_report**](ReportsApi.md#remove_channel_from_report) | **DELETE** /reports/{report_id}/channels/{channel_id} | Remove Channel From Report
 [**update_report**](ReportsApi.md#update_report) | **PUT** /reports/ | Update Report
 [**validate_report**](ReportsApi.md#validate_report) | **GET** /reports/{report_id}/validate | Validate Report
 
+
+# **add_channel_to_report**
+> Channel add_channel_to_report(report_id, channel_id_or_name)
+
+Add Channel To Report
+
+Add a channel to a report.
+
+### Example
+
+* OAuth Authentication (OAuth2PasswordBearer):
+
+```python
+import ugc_guard_python
+from ugc_guard_python.models.channel import Channel
+from ugc_guard_python.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = ugc_guard_python.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
+# Enter a context with an instance of the API client
+with ugc_guard_python.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = ugc_guard_python.ReportsApi(api_client)
+    report_id = 'report_id_example' # str | 
+    channel_id_or_name = 'channel_id_or_name_example' # str | 
+
+    try:
+        # Add Channel To Report
+        api_response = api_instance.add_channel_to_report(report_id, channel_id_or_name)
+        print("The response of ReportsApi->add_channel_to_report:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ReportsApi->add_channel_to_report: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **report_id** | **str**|  | 
+ **channel_id_or_name** | **str**|  | 
+
+### Return type
+
+[**Channel**](Channel.md)
+
+### Authorization
+
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**404** | Not found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_magic_report**
 > ReportDB create_magic_report(report_category, secret, body_create_magic_report, custom_message=custom_message)
@@ -178,6 +262,7 @@ Escalate a report to the escalate state
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -191,6 +276,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -222,7 +313,81 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**404** | Not found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **export_report_as_pdf**
+> export_report_as_pdf(report_id)
+
+Export Report As Pdf
+
+Export a report as PDF.
+
+### Example
+
+* OAuth Authentication (OAuth2PasswordBearer):
+
+```python
+import ugc_guard_python
+from ugc_guard_python.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = ugc_guard_python.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
+# Enter a context with an instance of the API client
+with ugc_guard_python.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = ugc_guard_python.ReportsApi(api_client)
+    report_id = 'report_id_example' # str | 
+
+    try:
+        # Export Report As Pdf
+        api_instance.export_report_as_pdf(report_id)
+    except Exception as e:
+        print("Exception when calling ReportsApi->export_report_as_pdf: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **report_id** | **str**|  | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -248,6 +413,7 @@ Get all reports in the database.
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -261,6 +427,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -291,6 +463,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**PaginatedResultReportDB**](PaginatedResultReportDB.md)
+
+### Authorization
+
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**404** | Not found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_channels_of_report**
+> List[Channel] get_channels_of_report(report_id)
+
+Get Channels Of Report
+
+Get all channels of a report.
+
+### Example
+
+
+```python
+import ugc_guard_python
+from ugc_guard_python.models.channel import Channel
+from ugc_guard_python.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = ugc_guard_python.Configuration(
+    host = "http://localhost"
+)
+
+
+# Enter a context with an instance of the API client
+with ugc_guard_python.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = ugc_guard_python.ReportsApi(api_client)
+    report_id = 'report_id_example' # str | 
+
+    try:
+        # Get Channels Of Report
+        api_response = api_instance.get_channels_of_report(report_id)
+        print("The response of ReportsApi->get_channels_of_report:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ReportsApi->get_channels_of_report: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **report_id** | **str**|  | 
+
+### Return type
+
+[**List[Channel]**](Channel.md)
 
 ### Authorization
 
@@ -392,6 +634,7 @@ Get all AI evaluations of a report and all available AI Models.
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -405,6 +648,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -436,7 +685,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -462,6 +711,7 @@ Get all AI evaluations of a report.
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -475,6 +725,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -510,7 +766,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -536,6 +792,7 @@ Get all reports the user has access to.
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -550,6 +807,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -593,7 +856,88 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**404** | Not found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_related_reports**
+> PaginatedResultReportDB get_related_reports(report_id, offset=offset, limit=limit)
+
+Get Related Reports
+
+Get all reports related to a report.
+
+### Example
+
+* OAuth Authentication (OAuth2PasswordBearer):
+
+```python
+import ugc_guard_python
+from ugc_guard_python.models.paginated_result_report_db import PaginatedResultReportDB
+from ugc_guard_python.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = ugc_guard_python.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
+# Enter a context with an instance of the API client
+with ugc_guard_python.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = ugc_guard_python.ReportsApi(api_client)
+    report_id = 'report_id_example' # str | 
+    offset = 0 # int |  (optional) (default to 0)
+    limit = 100 # int |  (optional) (default to 100)
+
+    try:
+        # Get Related Reports
+        api_response = api_instance.get_related_reports(report_id, offset=offset, limit=limit)
+        print("The response of ReportsApi->get_related_reports:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ReportsApi->get_related_reports: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **report_id** | **str**|  | 
+ **offset** | **int**|  | [optional] [default to 0]
+ **limit** | **int**|  | [optional] [default to 100]
+
+### Return type
+
+[**PaginatedResultReportDB**](PaginatedResultReportDB.md)
+
+### Authorization
+
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -763,6 +1107,7 @@ Resolves a report to the rejected state
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -776,6 +1121,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -807,7 +1158,91 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**404** | Not found |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **remove_channel_from_report**
+> Channel remove_channel_from_report(report_id, channel_id)
+
+Remove Channel From Report
+
+Remove a channel from a report.
+:param report_id: The ID of the report
+:param channel_id: The ID of the channel to remove
+:param session: Database session
+:param current_user: Current user
+:return: Removed Channel object
+
+### Example
+
+* OAuth Authentication (OAuth2PasswordBearer):
+
+```python
+import ugc_guard_python
+from ugc_guard_python.models.channel import Channel
+from ugc_guard_python.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = ugc_guard_python.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
+# Enter a context with an instance of the API client
+with ugc_guard_python.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = ugc_guard_python.ReportsApi(api_client)
+    report_id = 'report_id_example' # str | 
+    channel_id = 'channel_id_example' # str | 
+
+    try:
+        # Remove Channel From Report
+        api_response = api_instance.remove_channel_from_report(report_id, channel_id)
+        print("The response of ReportsApi->remove_channel_from_report:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ReportsApi->remove_channel_from_report: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **report_id** | **str**|  | 
+ **channel_id** | **str**|  | 
+
+### Return type
+
+[**Channel**](Channel.md)
+
+### Authorization
+
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -833,6 +1268,7 @@ Update an existing report.
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -846,6 +1282,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -877,7 +1319,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -895,7 +1337,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **validate_report**
-> Report validate_report(report_id, ai_model)
+> Report validate_report(report_id, ai_model=ai_model, guard_id=guard_id)
 
 Validate Report
 
@@ -903,6 +1345,7 @@ Validates a report using the given ai model
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
@@ -916,17 +1359,24 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = ugc_guard_python.ReportsApi(api_client)
     report_id = 'report_id_example' # str | 
-    ai_model = 'ai_model_example' # str | 
+    ai_model = 'ai_model_example' # str |  (optional)
+    guard_id = 'guard_id_example' # str |  (optional)
 
     try:
         # Validate Report
-        api_response = api_instance.validate_report(report_id, ai_model)
+        api_response = api_instance.validate_report(report_id, ai_model=ai_model, guard_id=guard_id)
         print("The response of ReportsApi->validate_report:\n")
         pprint(api_response)
     except Exception as e:
@@ -941,7 +1391,8 @@ with ugc_guard_python.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **report_id** | **str**|  | 
- **ai_model** | **str**|  | 
+ **ai_model** | **str**|  | [optional] 
+ **guard_id** | **str**|  | [optional] 
 
 ### Return type
 
@@ -949,7 +1400,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 

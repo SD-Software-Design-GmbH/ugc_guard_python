@@ -11,8 +11,12 @@ Name | Type | Description | Notes
 **total_files** | **int** |  | [optional] [default to 0]
 **total_reporters** | **int** |  | [optional] [default to 0]
 **total_actions** | **int** |  | [optional] [default to 0]
+**total_performed_actions** | **int** |  | [optional] [default to 0]
 **total_types** | **int** |  | [optional] [default to 0]
 **total_open_reports** | **int** |  | [optional] [default to 0]
+**total_guard_evaluations** | **int** |  | [optional] [default to 0]
+**total_guards_evaluations_passed** | **int** |  | [optional] [default to 0]
+**total_guards_evaluations_intervened** | **int** |  | [optional] [default to 0]
 
 ## Example
 

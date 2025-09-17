@@ -1,9 +1,11 @@
 import hashlib
 import hmac
+import mimetypes
+
 import ugc_guard_python
 import json
 
-from ugc_guard_python import ReportCategory
+from ugc_guard_python import ReportCategory, FilledGuardEvaluation, GuardEvaluation
 from ugc_guard_python.wrapper.content_wrapper import ContentWrapper, ReportContent, ReportPerson, Body, TextBody, \
     MultiMediaBody, MultiMultiMediaBody, ContentType
 from typing import Optional, List, Dict, Any
@@ -143,7 +145,30 @@ class GuardClient:
         except ugc_guard_python.ApiException as e:
             raise Exception(f"Exception when calling ReportsApi->create_magic_report: {e}")
 
-    def convert_person_to_person_db(self, person: ReportPerson, module_id: str) -> Person:
+    def convert_person_to_person_db(self, person: ReportPerson, module_id: str, module_secret: str) -> Person:
+
+        # Upload files associated with the person
+        for file_name in person.file_names:
+            if not file_name:
+                continue
+            with open(file_name, "rb") as f:
+                file_bytes = f.read()
+                multi_media_body = MultiMediaBody(
+                    body="",
+                    content_type=ContentType.OTHER,
+                    filename=file_name.split("/")[-1],
+                    bytes_=file_bytes,
+                    mime_type=mimetypes.guess_type(file_name)[0]
+                )
+                try:
+                    file = self._actual_upload(module_id, module_secret, multi_media_body)
+                    if file and file.id:
+                        if not person.media_identifiers:
+                            person.media_identifiers = []
+                        person.media_identifiers.append(file.id)
+                except ugc_guard_python.ApiException as e:
+                    raise Exception(f"Exception when calling FilesApi->upload_file: {e}")
+
         return Person(
             id=None,
             unique_partner_id=person.unique_partner_id,
@@ -151,7 +176,8 @@ class GuardClient:
             phone=person.phone,
             email=person.email,
             extra_data=person.additional_data,
-            module_id=module_id
+            module_id=module_id,
+            media_identifiers=person.media_identifiers or []
         )
 
     def convert_content_to_content_create(
@@ -163,7 +189,7 @@ class GuardClient:
 
         if type_ in [ContentType.OTHER, ContentType.TEXT]:
             return ContentCreate(
-                creator_id=content_wrapper.creator.unique_partner_id,
+                creator_id=content_wrapper.creator.unique_partner_id if content_wrapper.creator else None,
                 body=body.body,
                 body_type=type_,
                 created_at=report_content.created_at,
@@ -240,3 +266,61 @@ class GuardClient:
     @staticmethod
     def is_multi_multi_media_body(body: Body) -> bool:
         return isinstance(body, MultiMultiMediaBody)
+
+    def enqueue_guard(self, guard_id: str, module_id: str, module_secret: str, content: ContentWrapper,
+                      context: Optional[List[ContentWrapper]] = None,
+                      on_progress: Optional[callable] = None) -> GuardEvaluation:
+        """
+        Enqueue a content for review by a guard with the given guard_id.
+
+        This returns (most likely) an ongoing evaluation process. You can use the returned
+        evaluation ID to check the status of the evaluation later. (Use get_guard_evaluation)
+        """
+        try:
+            total_steps = 2
+
+            content_create = self.convert_content_to_content_create(
+                content, module_id, module_secret
+            )
+
+            if not content_create.media_identifiers:
+                raise Exception("No media identifiers found after upload.")
+
+            if on_progress:
+                on_progress(1, total_steps)
+
+            guards_api = ugc_guard_python.GuardsApi(self.api_client)
+            response = guards_api.enqueue_guard_evaluation(
+                guard_id=guard_id,
+                body=ugc_guard_python.BodyEnqueueGuardEvaluation(
+                    content=content_create,
+                    context=[
+                        self.convert_content_to_content_create(ctx, module_id, module_secret)
+                        for ctx in (context or [])
+                    ]
+                ),
+                secret=module_secret
+            )
+
+            if on_progress:
+                on_progress(total_steps, total_steps)
+
+            return response
+        except ugc_guard_python.ApiException as e:
+            raise Exception(f"Exception when calling GuardsApi->enqueue_guard: {e}")
+
+    def get_guard_evaluation(self, evaluation_id: str, module_secret: str) -> FilledGuardEvaluation:
+        """
+        Asks the UGC Guard service for the status of an evaluation with the given ID.
+        Do not spam this endpoint, use exponential backoff, or you could get temporarily rate-limited.
+        """
+
+        try:
+            guards_api = ugc_guard_python.GuardsApi(self.api_client)
+            response = guards_api.get_guard_evaluation(
+                evaluation_id=evaluation_id,
+                secret=module_secret
+            )
+            return response
+        except ugc_guard_python.ApiException as e:
+            raise Exception(f"Exception when calling GuardsApi->get_evaluation: {e}")

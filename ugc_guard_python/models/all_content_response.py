@@ -19,7 +19,9 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional
+from ugc_guard_python.models.action_history import ActionHistory
 from ugc_guard_python.models.content_public import ContentPublic
+from ugc_guard_python.models.type import Type
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,7 +31,9 @@ class AllContentResponse(BaseModel):
     """ # noqa: E501
     main_content: Optional[ContentPublic] = None
     context: List[ContentPublic]
-    __properties: ClassVar[List[str]] = ["main_content", "context"]
+    history: Optional[List[ActionHistory]] = None
+    types: Optional[List[Type]] = None
+    __properties: ClassVar[List[str]] = ["main_content", "context", "history", "types"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -80,6 +84,20 @@ class AllContentResponse(BaseModel):
                 if _item_context:
                     _items.append(_item_context.to_dict())
             _dict['context'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in history (list)
+        _items = []
+        if self.history:
+            for _item_history in self.history:
+                if _item_history:
+                    _items.append(_item_history.to_dict())
+            _dict['history'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in types (list)
+        _items = []
+        if self.types:
+            for _item_types in self.types:
+                if _item_types:
+                    _items.append(_item_types.to_dict())
+            _dict['types'] = _items
         # set to None if main_content (nullable) is None
         # and model_fields_set contains the field
         if self.main_content is None and "main_content" in self.model_fields_set:
@@ -98,7 +116,9 @@ class AllContentResponse(BaseModel):
 
         _obj = cls.model_validate({
             "main_content": ContentPublic.from_dict(obj["main_content"]) if obj.get("main_content") is not None else None,
-            "context": [ContentPublic.from_dict(_item) for _item in obj["context"]] if obj.get("context") is not None else None
+            "context": [ContentPublic.from_dict(_item) for _item in obj["context"]] if obj.get("context") is not None else None,
+            "history": [ActionHistory.from_dict(_item) for _item in obj["history"]] if obj.get("history") is not None else None,
+            "types": [Type.from_dict(_item) for _item in obj["types"]] if obj.get("types") is not None else None
         })
         return _obj
 

@@ -16,7 +16,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictBytes, StrictStr
+from pydantic import StrictBool, StrictBytes, StrictStr
 from typing import Optional, Tuple, Union
 from ugc_guard_python.models.file import File
 
@@ -54,7 +54,7 @@ class FilesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> File:
+    ) -> bool:
         """Delete File
 
         Delete a file.
@@ -92,7 +92,7 @@ class FilesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "File",
+            '200': "bool",
             '404': None,
             '422': "HTTPValidationError",
         }
@@ -123,7 +123,7 @@ class FilesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[File]:
+    ) -> ApiResponse[bool]:
         """Delete File
 
         Delete a file.
@@ -161,7 +161,7 @@ class FilesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "File",
+            '200': "bool",
             '404': None,
             '422': "HTTPValidationError",
         }
@@ -230,7 +230,7 @@ class FilesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "File",
+            '200': "bool",
             '404': None,
             '422': "HTTPValidationError",
         }
@@ -284,6 +284,7 @@ class FilesApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'OAuth2PasswordBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -309,6 +310,7 @@ class FilesApi:
         self,
         file_id: StrictStr,
         secret: Optional[StrictStr] = None,
+        type_id: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -330,6 +332,8 @@ class FilesApi:
         :type file_id: str
         :param secret:
         :type secret: str
+        :param type_id:
+        :type type_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -355,6 +359,7 @@ class FilesApi:
         _param = self._download_file_serialize(
             file_id=file_id,
             secret=secret,
+            type_id=type_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -382,6 +387,7 @@ class FilesApi:
         self,
         file_id: StrictStr,
         secret: Optional[StrictStr] = None,
+        type_id: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -403,6 +409,8 @@ class FilesApi:
         :type file_id: str
         :param secret:
         :type secret: str
+        :param type_id:
+        :type type_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -428,6 +436,7 @@ class FilesApi:
         _param = self._download_file_serialize(
             file_id=file_id,
             secret=secret,
+            type_id=type_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -455,6 +464,7 @@ class FilesApi:
         self,
         file_id: StrictStr,
         secret: Optional[StrictStr] = None,
+        type_id: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -476,6 +486,8 @@ class FilesApi:
         :type file_id: str
         :param secret:
         :type secret: str
+        :param type_id:
+        :type type_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -501,6 +513,7 @@ class FilesApi:
         _param = self._download_file_serialize(
             file_id=file_id,
             secret=secret,
+            type_id=type_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -523,6 +536,7 @@ class FilesApi:
         self,
         file_id,
         secret,
+        type_id,
         _request_auth,
         _content_type,
         _headers,
@@ -544,12 +558,18 @@ class FilesApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if file_id is not None:
-            _path_params['file_id'] = file_id
         # process the query parameters
+        if file_id is not None:
+            
+            _query_params.append(('file_id', file_id))
+            
         if secret is not None:
             
             _query_params.append(('secret', secret))
+            
+        if type_id is not None:
+            
+            _query_params.append(('type_id', type_id))
             
         # process the header parameters
         # process the form parameters
@@ -571,7 +591,7 @@ class FilesApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/files/download/{file_id}',
+            resource_path='/files/download/',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

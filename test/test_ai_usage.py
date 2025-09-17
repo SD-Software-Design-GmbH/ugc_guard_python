@@ -38,6 +38,9 @@ class TestAIUsage(unittest.TestCase):
                 organization_id = '',
                 month = 56,
                 year = 56,
+                used_tokens = 56,
+                used_input_tokens = 56,
+                used_output_tokens = 56,
                 ai_model = '',
                 usage_count = 56
             )

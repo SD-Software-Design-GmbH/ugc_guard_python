@@ -40,8 +40,12 @@ class TestModuleStats(unittest.TestCase):
                 total_files = 56,
                 total_reporters = 56,
                 total_actions = 56,
+                total_performed_actions = 56,
                 total_types = 56,
-                total_open_reports = 56
+                total_open_reports = 56,
+                total_guard_evaluations = 56,
+                total_guards_evaluations_passed = 56,
+                total_guards_evaluations_intervened = 56
             )
         else:
             return ModuleStats(

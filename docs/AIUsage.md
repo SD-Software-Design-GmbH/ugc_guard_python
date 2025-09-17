@@ -9,6 +9,9 @@ Name | Type | Description | Notes
 **organization_id** | **str** |  | 
 **month** | **int** | The month of the AI | 
 **year** | **int** | The year of the AI usage | 
+**used_tokens** | **int** | The number of tokens used by the AI model in this month | [optional] [default to 0]
+**used_input_tokens** | **int** | The number of input tokens used by the AI model in this month | [optional] [default to 0]
+**used_output_tokens** | **int** | The number of output tokens used by the AI model in this month | [optional] [default to 0]
 **ai_model** | **str** |  | 
 **usage_count** | **int** |  | [optional] [default to 0]
 

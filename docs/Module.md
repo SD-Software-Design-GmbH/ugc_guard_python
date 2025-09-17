@@ -9,8 +9,10 @@ Name | Type | Description | Notes
 **send_mail_on_report** | **bool** |  | [optional] [default to False]
 **send_mail_on_report_to_user** | **bool** |  | [optional] [default to False]
 **send_mail_on_resolved_report_to_user** | **bool** |  | [optional] [default to False]
+**send_mail_on_escalation_to_creators** | **bool** |  | [optional] [default to False]
+**send_mail_on_rejection_to_creator** | **bool** |  | [optional] [default to False]
 **id** | **str** |  | [optional] 
-**logo_url** | **str** |  | [optional] 
+**logo_id** | **str** |  | 
 **name** | **str** |  | 
 **description** | **str** |  | [optional] 
 **organization_id** | **str** |  | 

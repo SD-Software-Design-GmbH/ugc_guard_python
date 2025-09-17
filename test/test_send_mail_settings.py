@@ -37,7 +37,9 @@ class TestSendMailSettings(unittest.TestCase):
             return SendMailSettings(
                 send_mail_on_report = True,
                 send_mail_on_report_to_user = True,
-                send_mail_on_resolved_report_to_user = True
+                send_mail_on_resolved_report_to_user = True,
+                send_mail_on_escalation_to_creators = True,
+                send_mail_on_rejection_to_creator = True
             )
         else:
             return SendMailSettings(

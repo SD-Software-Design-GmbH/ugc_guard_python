@@ -47,6 +47,27 @@ class TestActionsApi(unittest.TestCase):
         """
         pass
 
+    def test_get_action_history(self) -> None:
+        """Test case for get_action_history
+
+        Get Perform History Of Action
+        """
+        pass
+
+    def test_get_action_history_by_content(self) -> None:
+        """Test case for get_action_history_by_content
+
+        Get Action History By Content Api
+        """
+        pass
+
+    def test_get_action_history_by_person(self) -> None:
+        """Test case for get_action_history_by_person
+
+        Get Action History By Person Api
+        """
+        pass
+
     def test_get_all_actions_of_type(self) -> None:
         """Test case for get_all_actions_of_type
 

@@ -52,7 +52,8 @@ class TestBodyCreateMagicReport(unittest.TestCase):
                     created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                     unique_partner_id = '', 
                     ip = '', 
-                    creator_id = '', ),
+                    creator_id = '', 
+                    type_id = '', ),
                 main_content_sender = None,
                 report_context = [
                     ugc_guard_python.models.content_create.ContentCreate(
@@ -67,7 +68,8 @@ class TestBodyCreateMagicReport(unittest.TestCase):
                         created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                         unique_partner_id = '', 
                         ip = '', 
-                        creator_id = '', )
+                        creator_id = '', 
+                        type_id = '', )
                     ],
                 report_context_persons = [
                     ugc_guard_python.models.person.Person(
@@ -79,7 +81,10 @@ class TestBodyCreateMagicReport(unittest.TestCase):
                         phone = '', 
                         extra_data = {
                             'key' : null
-                            }, )
+                            }, 
+                        media_identifiers = [
+                            ''
+                            ], )
                     ],
                 channels = [
                     ''
@@ -104,7 +109,8 @@ class TestBodyCreateMagicReport(unittest.TestCase):
                     created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                     unique_partner_id = '', 
                     ip = '', 
-                    creator_id = '', ),
+                    creator_id = '', 
+                    type_id = '', ),
                 main_content_sender = None,
                 report_context = [
                     ugc_guard_python.models.content_create.ContentCreate(
@@ -119,7 +125,8 @@ class TestBodyCreateMagicReport(unittest.TestCase):
                         created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                         unique_partner_id = '', 
                         ip = '', 
-                        creator_id = '', )
+                        creator_id = '', 
+                        type_id = '', )
                     ],
                 report_context_persons = [
                     ugc_guard_python.models.person.Person(
@@ -131,7 +138,10 @@ class TestBodyCreateMagicReport(unittest.TestCase):
                         phone = '', 
                         extra_data = {
                             'key' : null
-                            }, )
+                            }, 
+                        media_identifiers = [
+                            ''
+                            ], )
                     ],
         )
         """

@@ -60,7 +60,10 @@ class TestReportWithReportersAndEvaluations(unittest.TestCase):
                             phone = '', 
                             extra_data = {
                                 'key' : null
-                                }, ), )
+                                }, 
+                            media_identifiers = [
+                                ''
+                                ], ), )
                     ],
                 evaluations = [
                     ugc_guard_python.models.ai_evaluation.AIEvaluation(
@@ -68,10 +71,23 @@ class TestReportWithReportersAndEvaluations(unittest.TestCase):
                         severity = 1.0, 
                         explanation = '', 
                         action_recommendation = '', 
+                        rule_id = '', 
+                        id = '', 
                         report_id = '', 
                         created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                         ai_model = '', 
                         generated_tokens = 56, )
+                    ],
+                guard_evaluations = [
+                    ugc_guard_python.models.guard_evaluation.GuardEvaluation(
+                        id = '', 
+                        created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                        ongoing = True, 
+                        passed = True, 
+                        task_id = '', 
+                        guard_id = '', 
+                        report_id = '', 
+                        severity = 56, )
                     ]
             )
         else:

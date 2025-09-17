@@ -26,6 +26,13 @@ class TestAiApi(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
+    def test_get_ai_usage_costs_for_organization(self) -> None:
+        """Test case for get_ai_usage_costs_for_organization
+
+        Get The Ai Costs For Organization
+        """
+        pass
+
     def test_get_all_ai_models(self) -> None:
         """Test case for get_all_ai_models
 

@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **uploaded_at** | **datetime** |  | [optional] 
 **removed_at** | **datetime** |  | [optional] 
 **module_id** | **str** |  | 
+**person_id** | **str** |  | 
 
 ## Example
 

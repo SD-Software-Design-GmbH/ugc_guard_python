@@ -29,11 +29,11 @@ class Organization(BaseModel):
     id: Optional[StrictStr] = None
     name: StrictStr
     description: Optional[StrictStr] = None
-    logo_url: Optional[StrictStr] = None
+    logo_id: Optional[StrictStr]
     enabled_ai_list: Optional[List[StrictStr]] = None
     enabled_ai: Optional[StrictBool] = None
     support_email: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["id", "name", "description", "logo_url", "enabled_ai_list", "enabled_ai", "support_email"]
+    __properties: ClassVar[List[str]] = ["id", "name", "description", "logo_id", "enabled_ai_list", "enabled_ai", "support_email"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -79,10 +79,10 @@ class Organization(BaseModel):
         if self.description is None and "description" in self.model_fields_set:
             _dict['description'] = None
 
-        # set to None if logo_url (nullable) is None
+        # set to None if logo_id (nullable) is None
         # and model_fields_set contains the field
-        if self.logo_url is None and "logo_url" in self.model_fields_set:
-            _dict['logo_url'] = None
+        if self.logo_id is None and "logo_id" in self.model_fields_set:
+            _dict['logo_id'] = None
 
         # set to None if enabled_ai (nullable) is None
         # and model_fields_set contains the field
@@ -109,7 +109,7 @@ class Organization(BaseModel):
             "id": obj.get("id"),
             "name": obj.get("name"),
             "description": obj.get("description"),
-            "logo_url": obj.get("logo_url"),
+            "logo_id": obj.get("logo_id"),
             "enabled_ai_list": obj.get("enabled_ai_list"),
             "enabled_ai": obj.get("enabled_ai"),
             "support_email": obj.get("support_email")

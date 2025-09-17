@@ -30,9 +30,11 @@ class UserWithMembershipState(BaseModel):
     id: Optional[StrictStr] = None
     username: StrictStr
     email: StrictStr
+    name: Optional[StrictStr] = None
+    avatar_id: Optional[StrictStr] = None
     avatar_url: Optional[StrictStr] = None
     membership_state: UserOrganizationMembershipState
-    __properties: ClassVar[List[str]] = ["id", "username", "email", "avatar_url", "membership_state"]
+    __properties: ClassVar[List[str]] = ["id", "username", "email", "name", "avatar_id", "avatar_url", "membership_state"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -73,6 +75,16 @@ class UserWithMembershipState(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if name (nullable) is None
+        # and model_fields_set contains the field
+        if self.name is None and "name" in self.model_fields_set:
+            _dict['name'] = None
+
+        # set to None if avatar_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.avatar_id is None and "avatar_id" in self.model_fields_set:
+            _dict['avatar_id'] = None
+
         # set to None if avatar_url (nullable) is None
         # and model_fields_set contains the field
         if self.avatar_url is None and "avatar_url" in self.model_fields_set:
@@ -93,6 +105,8 @@ class UserWithMembershipState(BaseModel):
             "id": obj.get("id"),
             "username": obj.get("username"),
             "email": obj.get("email"),
+            "name": obj.get("name"),
+            "avatar_id": obj.get("avatar_id"),
             "avatar_url": obj.get("avatar_url"),
             "membership_state": obj.get("membership_state")
         })

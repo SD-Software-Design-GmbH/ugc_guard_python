@@ -10,6 +10,8 @@ Name | Type | Description | Notes
 **severity** | **int** | Severity of the report, 1-5, 5 being the most severe.  | [optional] [default to 1]
 **explanation** | **str** | Explanation of the AI&#39;s decision | [optional] 
 **action_recommendation** | **str** | Recommended action to take on the report | [optional] 
+**rule_id** | **str** |  | 
+**id** | **str** |  | [optional] 
 **report_id** | **str** |  | 
 **created_at** | **datetime** |  | [optional] 
 **ai_model** | **str** | The AI model that performed the evaluation | 

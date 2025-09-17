@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **id** | **str** |  | [optional] 
 **name** | **str** |  | 
 **description** | **str** |  | [optional] 
-**logo_url** | **str** |  | [optional] 
+**logo_id** | **str** |  | 
 **enabled_ai_list** | **List[str]** |  | [optional] 
 **enabled_ai** | **bool** |  | [optional] 
 **support_email** | **str** |  | [optional] 

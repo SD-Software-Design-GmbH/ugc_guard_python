@@ -8,6 +8,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **main_content** | [**ContentPublic**](ContentPublic.md) |  | [optional] 
 **context** | [**List[ContentPublic]**](ContentPublic.md) |  | 
+**history** | [**List[ActionHistory]**](ActionHistory.md) |  | [optional] [default to []]
+**types** | [**List[Type]**](Type.md) |  | [optional] [default to []]
 
 ## Example
 

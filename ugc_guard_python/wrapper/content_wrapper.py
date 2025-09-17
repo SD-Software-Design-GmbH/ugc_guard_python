@@ -1,4 +1,5 @@
 import enum
+import json
 from typing import Optional, List, Union
 from datetime import datetime
 
@@ -18,6 +19,17 @@ class Body:
             raise TypeError("Abstract classes can't be instantiated.")
         self.content_type = content_type
         self.body = body
+
+
+
+class JsonBody(Body):
+    """
+    JsonBody is used to represent JSON content in a report.
+    """
+    def __init__(self, json_data: dict) -> None:
+        super().__init__(content_type=ContentType.OTHER, body=json.dumps(json_data))
+        self.json_data = json_data
+
 
 
 class TextBody(Body):
@@ -106,7 +118,15 @@ class ReportContent:
 class ReportPerson:
     """
     A person who reported content or who created content in a report.
+
+    Media_identifiers are the profile pictures of the person. They can be as always either URLs or the IDs of files
+    uploaded to UGC Guard. They must be images.
+
+    You can add files to be uploaded later with the add_file_name method. The file will be uploaded to UGC Guard and
+    then its ID will be added to the media_identifiers list.
     """
+
+    file_names: List[str] = []
 
     def __init__(
             self,
@@ -114,20 +134,38 @@ class ReportPerson:
             name: Optional[str] = None,
             email: Optional[str] = None,
             phone: Optional[str] = None,
-            additional_data: Optional[dict] = None
+            additional_data: Optional[dict] = None,
+            media_identifiers: Optional[List[str]] = None
     ) -> None:
         self.unique_partner_id = unique_partner_id
         self.name = name
         self.email = email
         self.phone = phone
         self.additional_data = additional_data
+        self.media_identifiers = media_identifiers
+
+    def add_file_name(self, file_name: str) -> None:
+        """
+        Adds a file name to the list of file names associated with this person.
+
+        The file will be uploaded to UGC Guard and then its ID will be added to the media_identifiers list.
+
+        :param file_name: The name of the file to add.
+        :return: None
+        """
+        self.file_names.append(file_name)
+
 
 
 class ContentWrapper:
     """
     Wraps the actual content and creator information for a content object of a report.
+
+    Creator can be None if the content was created by an anonymous user/by the system or by no known user.
+    But please be aware that no creator means that your reviewers are missing important context about the content and
+    some features of UGC Guard might not work as expected (e.g. related reports).
     """
 
-    def __init__(self, content: ReportContent, creator: ReportPerson) -> None:
+    def __init__(self, content: ReportContent, creator: Optional[ReportPerson]) -> None:
         self.content = content
         self.creator = creator

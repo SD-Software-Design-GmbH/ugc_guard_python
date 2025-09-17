@@ -16,7 +16,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
+from pydantic import StrictBool, StrictStr
 from typing import Optional
 from ugc_guard_python.models.all_content_response import AllContentResponse
 from ugc_guard_python.models.content import Content
@@ -298,6 +298,7 @@ class ContentApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'OAuth2PasswordBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -334,7 +335,7 @@ class ContentApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Content:
+    ) -> bool:
         """Delete Content
 
         Delete a content.
@@ -372,7 +373,7 @@ class ContentApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Content",
+            '200': "bool",
             '404': None,
             '422': "HTTPValidationError",
         }
@@ -403,7 +404,7 @@ class ContentApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Content]:
+    ) -> ApiResponse[bool]:
         """Delete Content
 
         Delete a content.
@@ -441,7 +442,7 @@ class ContentApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Content",
+            '200': "bool",
             '404': None,
             '422': "HTTPValidationError",
         }
@@ -510,7 +511,7 @@ class ContentApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Content",
+            '200': "bool",
             '404': None,
             '422': "HTTPValidationError",
         }
@@ -564,6 +565,7 @@ class ContentApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'OAuth2PasswordBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -830,6 +832,7 @@ class ContentApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'OAuth2PasswordBearer'
         ]
 
         return self.api_client.param_serialize(

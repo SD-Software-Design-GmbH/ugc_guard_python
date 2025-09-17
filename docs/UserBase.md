@@ -9,6 +9,8 @@ Name | Type | Description | Notes
 **id** | **str** |  | [optional] 
 **username** | **str** |  | 
 **email** | **str** |  | 
+**name** | **str** |  | [optional] 
+**avatar_id** | **str** |  | [optional] 
 **avatar_url** | **str** |  | [optional] 
 
 ## Example

@@ -21,6 +21,8 @@ from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional
 from ugc_guard_python.models.ai_evaluation import AIEvaluation
 from ugc_guard_python.models.ai_model import AiModel
+from ugc_guard_python.models.filled_guard import FilledGuard
+from ugc_guard_python.models.filled_guard_evaluation import FilledGuardEvaluation
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,9 +30,11 @@ class AIEnrichedAnswer(BaseModel):
     """
     Represents an enriched answer with all evaluations for a report, and all enabled AI models.
     """ # noqa: E501
+    guards: Optional[List[FilledGuard]] = None
+    guard_evaluations: Optional[List[FilledGuardEvaluation]] = None
     evaluations: Optional[List[AIEvaluation]] = None
     ai_models: Optional[List[AiModel]] = None
-    __properties: ClassVar[List[str]] = ["evaluations", "ai_models"]
+    __properties: ClassVar[List[str]] = ["guards", "guard_evaluations", "evaluations", "ai_models"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -71,6 +75,20 @@ class AIEnrichedAnswer(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in guards (list)
+        _items = []
+        if self.guards:
+            for _item_guards in self.guards:
+                if _item_guards:
+                    _items.append(_item_guards.to_dict())
+            _dict['guards'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in guard_evaluations (list)
+        _items = []
+        if self.guard_evaluations:
+            for _item_guard_evaluations in self.guard_evaluations:
+                if _item_guard_evaluations:
+                    _items.append(_item_guard_evaluations.to_dict())
+            _dict['guard_evaluations'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in evaluations (list)
         _items = []
         if self.evaluations:
@@ -85,6 +103,16 @@ class AIEnrichedAnswer(BaseModel):
                 if _item_ai_models:
                     _items.append(_item_ai_models.to_dict())
             _dict['ai_models'] = _items
+        # set to None if guards (nullable) is None
+        # and model_fields_set contains the field
+        if self.guards is None and "guards" in self.model_fields_set:
+            _dict['guards'] = None
+
+        # set to None if guard_evaluations (nullable) is None
+        # and model_fields_set contains the field
+        if self.guard_evaluations is None and "guard_evaluations" in self.model_fields_set:
+            _dict['guard_evaluations'] = None
+
         # set to None if evaluations (nullable) is None
         # and model_fields_set contains the field
         if self.evaluations is None and "evaluations" in self.model_fields_set:
@@ -107,6 +135,8 @@ class AIEnrichedAnswer(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "guards": [FilledGuard.from_dict(_item) for _item in obj["guards"]] if obj.get("guards") is not None else None,
+            "guard_evaluations": [FilledGuardEvaluation.from_dict(_item) for _item in obj["guard_evaluations"]] if obj.get("guard_evaluations") is not None else None,
             "evaluations": [AIEvaluation.from_dict(_item) for _item in obj["evaluations"]] if obj.get("evaluations") is not None else None,
             "ai_models": [AiModel.from_dict(_item) for _item in obj["ai_models"]] if obj.get("ai_models") is not None else None
         })

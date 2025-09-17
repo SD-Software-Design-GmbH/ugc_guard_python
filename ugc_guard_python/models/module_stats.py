@@ -31,9 +31,13 @@ class ModuleStats(BaseModel):
     total_files: Optional[StrictInt] = 0
     total_reporters: Optional[StrictInt] = 0
     total_actions: Optional[StrictInt] = 0
+    total_performed_actions: Optional[StrictInt] = 0
     total_types: Optional[StrictInt] = 0
     total_open_reports: Optional[StrictInt] = 0
-    __properties: ClassVar[List[str]] = ["module_id", "total_reports", "total_files", "total_reporters", "total_actions", "total_types", "total_open_reports"]
+    total_guard_evaluations: Optional[StrictInt] = 0
+    total_guards_evaluations_passed: Optional[StrictInt] = 0
+    total_guards_evaluations_intervened: Optional[StrictInt] = 0
+    __properties: ClassVar[List[str]] = ["module_id", "total_reports", "total_files", "total_reporters", "total_actions", "total_performed_actions", "total_types", "total_open_reports", "total_guard_evaluations", "total_guards_evaluations_passed", "total_guards_evaluations_intervened"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -91,8 +95,12 @@ class ModuleStats(BaseModel):
             "total_files": obj.get("total_files") if obj.get("total_files") is not None else 0,
             "total_reporters": obj.get("total_reporters") if obj.get("total_reporters") is not None else 0,
             "total_actions": obj.get("total_actions") if obj.get("total_actions") is not None else 0,
+            "total_performed_actions": obj.get("total_performed_actions") if obj.get("total_performed_actions") is not None else 0,
             "total_types": obj.get("total_types") if obj.get("total_types") is not None else 0,
-            "total_open_reports": obj.get("total_open_reports") if obj.get("total_open_reports") is not None else 0
+            "total_open_reports": obj.get("total_open_reports") if obj.get("total_open_reports") is not None else 0,
+            "total_guard_evaluations": obj.get("total_guard_evaluations") if obj.get("total_guard_evaluations") is not None else 0,
+            "total_guards_evaluations_passed": obj.get("total_guards_evaluations_passed") if obj.get("total_guards_evaluations_passed") is not None else 0,
+            "total_guards_evaluations_intervened": obj.get("total_guards_evaluations_intervened") if obj.get("total_guards_evaluations_intervened") is not None else 0
         })
         return _obj
 

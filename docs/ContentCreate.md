@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **unique_partner_id** | **str** |  | [optional] 
 **ip** | **str** |  | [optional] 
 **creator_id** | **str** |  | 
+**type_id** | **str** |  | [optional] 
 
 ## Example
 

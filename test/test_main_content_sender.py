@@ -43,7 +43,10 @@ class TestMainContentSender(unittest.TestCase):
                 phone = '',
                 extra_data = {
                     'key' : null
-                    }
+                    },
+                media_identifiers = [
+                    ''
+                    ]
             )
         else:
             return MainContentSender(

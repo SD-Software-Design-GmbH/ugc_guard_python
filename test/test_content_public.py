@@ -47,6 +47,7 @@ class TestContentPublic(unittest.TestCase):
                 unique_partner_id = '',
                 ip = '',
                 creator_id = '',
+                type_id = '',
                 id = '',
                 creator = ugc_guard_python.models.person.Person(
                     id = '', 
@@ -57,7 +58,25 @@ class TestContentPublic(unittest.TestCase):
                     phone = '', 
                     extra_data = {
                         'key' : null
-                        }, )
+                        }, 
+                    media_identifiers = [
+                        ''
+                        ], ),
+                comments = [
+                    ugc_guard_python.models.comment_with_creator.CommentWithCreator(
+                        id = '', 
+                        body = '', 
+                        created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                        creator_id = '', 
+                        show_public = True, 
+                        creator = ugc_guard_python.models.user_base.UserBase(
+                            id = '', 
+                            username = '', 
+                            email = '', 
+                            name = '', 
+                            avatar_id = '', 
+                            avatar_url = '', ), )
+                    ]
             )
         else:
             return ContentPublic(

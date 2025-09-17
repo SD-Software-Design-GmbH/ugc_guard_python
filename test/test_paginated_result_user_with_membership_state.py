@@ -41,6 +41,8 @@ class TestPaginatedResultUserWithMembershipState(unittest.TestCase):
                         id = '', 
                         username = '', 
                         email = '', 
+                        name = '', 
+                        avatar_id = '', 
                         avatar_url = '', 
                         membership_state = 'invited', )
                     ]
@@ -53,6 +55,8 @@ class TestPaginatedResultUserWithMembershipState(unittest.TestCase):
                         id = '', 
                         username = '', 
                         email = '', 
+                        name = '', 
+                        avatar_id = '', 
                         avatar_url = '', 
                         membership_state = 'invited', )
                     ],

@@ -11,6 +11,9 @@ Name | Type | Description | Notes
 **model** | **str** |  | 
 **description** | **str** |  | [optional] 
 **logo** | **str** |  | [optional] 
+**costs_per_factor_input_tokens** | **float** |  | [optional] [default to 0.0]
+**costs_per_factor_output_tokens** | **float** |  | [optional] [default to 0.0]
+**factor_tokens** | **int** |  | [optional] [default to 1000]
 
 ## Example
 

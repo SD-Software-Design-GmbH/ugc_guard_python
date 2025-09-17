@@ -29,7 +29,9 @@ class SendMailSettings(BaseModel):
     send_mail_on_report: Optional[StrictBool] = False
     send_mail_on_report_to_user: Optional[StrictBool] = False
     send_mail_on_resolved_report_to_user: Optional[StrictBool] = False
-    __properties: ClassVar[List[str]] = ["send_mail_on_report", "send_mail_on_report_to_user", "send_mail_on_resolved_report_to_user"]
+    send_mail_on_escalation_to_creators: Optional[StrictBool] = False
+    send_mail_on_rejection_to_creator: Optional[StrictBool] = False
+    __properties: ClassVar[List[str]] = ["send_mail_on_report", "send_mail_on_report_to_user", "send_mail_on_resolved_report_to_user", "send_mail_on_escalation_to_creators", "send_mail_on_rejection_to_creator"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -84,7 +86,9 @@ class SendMailSettings(BaseModel):
         _obj = cls.model_validate({
             "send_mail_on_report": obj.get("send_mail_on_report") if obj.get("send_mail_on_report") is not None else False,
             "send_mail_on_report_to_user": obj.get("send_mail_on_report_to_user") if obj.get("send_mail_on_report_to_user") is not None else False,
-            "send_mail_on_resolved_report_to_user": obj.get("send_mail_on_resolved_report_to_user") if obj.get("send_mail_on_resolved_report_to_user") is not None else False
+            "send_mail_on_resolved_report_to_user": obj.get("send_mail_on_resolved_report_to_user") if obj.get("send_mail_on_resolved_report_to_user") is not None else False,
+            "send_mail_on_escalation_to_creators": obj.get("send_mail_on_escalation_to_creators") if obj.get("send_mail_on_escalation_to_creators") is not None else False,
+            "send_mail_on_rejection_to_creator": obj.get("send_mail_on_rejection_to_creator") if obj.get("send_mail_on_rejection_to_creator") is not None else False
         })
         return _obj
 

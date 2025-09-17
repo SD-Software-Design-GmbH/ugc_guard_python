@@ -21,6 +21,7 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from ugc_guard_python.models.ai_evaluation import AIEvaluation
+from ugc_guard_python.models.guard_evaluation import GuardEvaluation
 from ugc_guard_python.models.report_state import ReportState
 from ugc_guard_python.models.reporters_with_person import ReportersWithPerson
 from typing import Optional, Set
@@ -41,7 +42,8 @@ class ReportWithReportersAndEvaluations(BaseModel):
     secret: Optional[StrictStr] = None
     reporters: Optional[List[ReportersWithPerson]] = None
     evaluations: Optional[List[AIEvaluation]] = None
-    __properties: ClassVar[List[str]] = ["description", "module_id", "type_id", "id", "report_state", "main_content_id", "reported_at", "updated_at", "secret", "reporters", "evaluations"]
+    guard_evaluations: Optional[List[GuardEvaluation]] = None
+    __properties: ClassVar[List[str]] = ["description", "module_id", "type_id", "id", "report_state", "main_content_id", "reported_at", "updated_at", "secret", "reporters", "evaluations", "guard_evaluations"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -96,6 +98,13 @@ class ReportWithReportersAndEvaluations(BaseModel):
                 if _item_evaluations:
                     _items.append(_item_evaluations.to_dict())
             _dict['evaluations'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in guard_evaluations (list)
+        _items = []
+        if self.guard_evaluations:
+            for _item_guard_evaluations in self.guard_evaluations:
+                if _item_guard_evaluations:
+                    _items.append(_item_guard_evaluations.to_dict())
+            _dict['guard_evaluations'] = _items
         # set to None if description (nullable) is None
         # and model_fields_set contains the field
         if self.description is None and "description" in self.model_fields_set:
@@ -123,7 +132,8 @@ class ReportWithReportersAndEvaluations(BaseModel):
             "updated_at": obj.get("updated_at"),
             "secret": obj.get("secret"),
             "reporters": [ReportersWithPerson.from_dict(_item) for _item in obj["reporters"]] if obj.get("reporters") is not None else None,
-            "evaluations": [AIEvaluation.from_dict(_item) for _item in obj["evaluations"]] if obj.get("evaluations") is not None else None
+            "evaluations": [AIEvaluation.from_dict(_item) for _item in obj["evaluations"]] if obj.get("evaluations") is not None else None,
+            "guard_evaluations": [GuardEvaluation.from_dict(_item) for _item in obj["guard_evaluations"]] if obj.get("guard_evaluations") is not None else None
         })
         return _obj
 

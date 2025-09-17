@@ -13,8 +13,10 @@ Name | Type | Description | Notes
 **unique_partner_id** | **str** |  | [optional] 
 **ip** | **str** |  | [optional] 
 **creator_id** | **str** |  | 
+**type_id** | **str** |  | [optional] 
 **id** | **str** |  | [optional] 
 **creator** | [**Person**](Person.md) |  | [optional] 
+**comments** | [**List[CommentWithCreator]**](CommentWithCreator.md) |  | [optional] [default to []]
 
 ## Example
 

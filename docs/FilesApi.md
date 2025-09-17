@@ -5,14 +5,14 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**delete_file**](FilesApi.md#delete_file) | **DELETE** /files/{file_id} | Delete File
-[**download_file**](FilesApi.md#download_file) | **GET** /files/download/{file_id} | Download File
+[**download_file**](FilesApi.md#download_file) | **GET** /files/download/ | Download File
 [**get_file_by_id**](FilesApi.md#get_file_by_id) | **GET** /files/{file_id} | Get File By Id
 [**update_file**](FilesApi.md#update_file) | **PUT** /files/{file_id}/{secret} | Update File
 [**upload_file**](FilesApi.md#upload_file) | **POST** /files/upload | Upload File
 
 
 # **delete_file**
-> File delete_file(file_id)
+> bool delete_file(file_id)
 
 Delete File
 
@@ -20,10 +20,10 @@ Delete a file.
 
 ### Example
 
+* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import ugc_guard_python
-from ugc_guard_python.models.file import File
 from ugc_guard_python.rest import ApiException
 from pprint import pprint
 
@@ -33,6 +33,12 @@ configuration = ugc_guard_python.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with ugc_guard_python.ApiClient(configuration) as api_client:
@@ -60,11 +66,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**File**](File.md)
+**bool**
 
 ### Authorization
 
-No authorization required
+[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
@@ -82,7 +88,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **download_file**
-> download_file(file_id, secret=secret)
+> download_file(file_id, secret=secret, type_id=type_id)
 
 Download File
 
@@ -109,10 +115,11 @@ with ugc_guard_python.ApiClient(configuration) as api_client:
     api_instance = ugc_guard_python.FilesApi(api_client)
     file_id = 'file_id_example' # str | 
     secret = 'secret_example' # str |  (optional)
+    type_id = 'type_id_example' # str |  (optional)
 
     try:
         # Download File
-        api_instance.download_file(file_id, secret=secret)
+        api_instance.download_file(file_id, secret=secret, type_id=type_id)
     except Exception as e:
         print("Exception when calling FilesApi->download_file: %s\n" % e)
 ```
@@ -126,6 +133,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **file_id** | **str**|  | 
  **secret** | **str**|  | [optional] 
+ **type_id** | **str**|  | [optional] 
 
 ### Return type
 

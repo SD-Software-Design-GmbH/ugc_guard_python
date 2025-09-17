@@ -29,9 +29,12 @@ class AIUsage(BaseModel):
     organization_id: StrictStr
     month: StrictInt = Field(description="The month of the AI")
     year: StrictInt = Field(description="The year of the AI usage")
+    used_tokens: Optional[StrictInt] = Field(default=0, description="The number of tokens used by the AI model in this month")
+    used_input_tokens: Optional[StrictInt] = Field(default=0, description="The number of input tokens used by the AI model in this month")
+    used_output_tokens: Optional[StrictInt] = Field(default=0, description="The number of output tokens used by the AI model in this month")
     ai_model: StrictStr
     usage_count: Optional[StrictInt] = 0
-    __properties: ClassVar[List[str]] = ["organization_id", "month", "year", "ai_model", "usage_count"]
+    __properties: ClassVar[List[str]] = ["organization_id", "month", "year", "used_tokens", "used_input_tokens", "used_output_tokens", "ai_model", "usage_count"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -87,6 +90,9 @@ class AIUsage(BaseModel):
             "organization_id": obj.get("organization_id"),
             "month": obj.get("month"),
             "year": obj.get("year"),
+            "used_tokens": obj.get("used_tokens") if obj.get("used_tokens") is not None else 0,
+            "used_input_tokens": obj.get("used_input_tokens") if obj.get("used_input_tokens") is not None else 0,
+            "used_output_tokens": obj.get("used_output_tokens") if obj.get("used_output_tokens") is not None else 0,
             "ai_model": obj.get("ai_model"),
             "usage_count": obj.get("usage_count") if obj.get("usage_count") is not None else 0
         })
