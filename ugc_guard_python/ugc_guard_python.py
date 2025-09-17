@@ -48,6 +48,24 @@ class GuardClient:
 
         return True
 
+    @staticmethod
+    def verify_one_of_signatures(payload_body: dict, secret_tokens: List[str], signature_header: str) -> bool:
+        """
+        Verify that the payload was sent from UGC Guard by validating SHA256 against one of the given secrets.
+
+        Args:
+            payload_body: original request body to verify (request.body())
+            secret_tokens: list of UGC Guard webhook tokens (WEBHOOK_SECRET)
+            signature_header: header received from UGC Guard (x-action-signature)
+
+        returns:
+            bool: True if one of the signatures is valid else False.
+        """
+        for secret_token in secret_tokens:
+            if GuardClient.verify_signature(payload_body, secret_token, signature_header):
+                return True
+        return False
+
     def report(
             self,
             module_id: str,
