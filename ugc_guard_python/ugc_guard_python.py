@@ -195,7 +195,8 @@ class GuardClient:
                 created_at=report_content.created_at,
                 extra_data=report_content.additional_data,
                 ip=report_content.ip,
-                unique_partner_id=report_content.unique_partner_id
+                unique_partner_id=report_content.unique_partner_id,
+                type_id=content_wrapper.content.type_id if content_wrapper.content.type_id else None,
             )
         else:
             media_identifiers = []
@@ -212,14 +213,15 @@ class GuardClient:
                 raise Exception("No media identifiers found after upload.")
 
             return ContentCreate(
-                creator_id=content_wrapper.creator.unique_partner_id,
+                creator_id=content_wrapper.creator.unique_partner_id if content_wrapper.creator else None,
                 body=body.body,
                 body_type=body.content_type,
                 created_at=report_content.created_at,
                 extra_data=report_content.additional_data,
                 ip=report_content.ip,
                 unique_partner_id=report_content.unique_partner_id,
-                media_identifiers=media_identifiers
+                media_identifiers=media_identifiers,
+                type_id=content_wrapper.content.type_id if content_wrapper.content.type_id else None,
             )
 
     def upload_files(

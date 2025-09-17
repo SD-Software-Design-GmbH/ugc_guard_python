@@ -97,22 +97,24 @@ class ReportContent:
     """
     Actual content of a report, which can be the "main content" or "context content".
 
-    The body of this content can be a [TextBody], [MultiMediaBody], [MultiMultiMediaBody] or [ProxiedMultiMultiMediaBody].
+    The body of this content can be a [TextBody], [JsonBody], [MultiMediaBody], [MultiMultiMediaBody] or [ProxiedMultiMultiMediaBody].
     """
 
     def __init__(
             self,
             unique_partner_id: str,
-            body: Union[TextBody, MultiMediaBody, MultiMultiMediaBody, ProxiedMultiMultiMediaBody],
+            body: Union[TextBody, MultiMediaBody, MultiMultiMediaBody, ProxiedMultiMultiMediaBody, JsonBody],
             additional_data: Optional[dict] = None,
             ip: Optional[str] = None,
-            created_at: Optional[datetime] = None
+            created_at: Optional[datetime] = None,
+            type_id: Optional[str] = None
     ) -> None:
         self.unique_partner_id = unique_partner_id
         self.body = body
         self.additional_data = additional_data
         self.ip = ip
         self.created_at = created_at
+        self.type_id = type_id
 
 
 class ReportPerson:
