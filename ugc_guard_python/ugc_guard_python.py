@@ -196,7 +196,7 @@ class GuardClient:
                 extra_data=report_content.additional_data,
                 ip=report_content.ip,
                 unique_partner_id=report_content.unique_partner_id,
-                type_id=content_wrapper.content.type_id if content_wrapper.content.type_id else None,
+                type_id=report_content.type_id if report_content.type_id else None,
             )
         else:
             media_identifiers = []
@@ -221,7 +221,7 @@ class GuardClient:
                 ip=report_content.ip,
                 unique_partner_id=report_content.unique_partner_id,
                 media_identifiers=media_identifiers,
-                type_id=content_wrapper.content.type_id if content_wrapper.content.type_id else None,
+                type_id=report_content.type_id if report_content.type_id else None,
             )
 
     def upload_files(
