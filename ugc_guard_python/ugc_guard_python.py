@@ -288,6 +288,7 @@ class GuardClient:
         return isinstance(body, MultiMultiMediaBody)
 
     def enqueue_guard(self, guard_id: str, module_id: str, module_secret: str, content: ContentWrapper,
+                      type_id: str | None = None,
                       context: Optional[List[ContentWrapper]] = None,
                       on_progress: Optional[callable] = None) -> GuardEvaluation:
         """
@@ -312,14 +313,15 @@ class GuardClient:
             guards_api = ugc_guard_python.GuardsApi(self.api_client)
             response = guards_api.enqueue_guard_evaluation(
                 guard_id=guard_id,
-                body=ugc_guard_python.BodyEnqueueGuardEvaluation(
+                body_enqueue_guard_evaluation=ugc_guard_python.BodyEnqueueGuardEvaluation(
                     content=content_create,
                     context=[
                         self.convert_content_to_content_create(ctx, module_id, module_secret)
                         for ctx in (context or [])
                     ]
                 ),
-                secret=module_secret
+                type_id=type_id,
+                module_secret=module_secret
             )
 
             if on_progress:
