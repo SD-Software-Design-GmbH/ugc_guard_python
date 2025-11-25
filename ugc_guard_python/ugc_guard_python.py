@@ -341,7 +341,7 @@ class GuardClient:
             guards_api = ugc_guard_python.GuardsApi(self.api_client)
             response = guards_api.get_guard_evaluation(
                 evaluation_id=evaluation_id,
-                secret=module_secret
+                module_secret=module_secret
             )
             return response
         except ugc_guard_python.ApiException as e:
