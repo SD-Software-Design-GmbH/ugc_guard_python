@@ -305,7 +305,10 @@ class GuardClient:
             )
 
             if not content_create.media_identifiers:
-                raise Exception("No media identifiers found after upload.")
+                if content_create.body_type in [ContentType.OTHER, ContentType.TEXT]:
+                    pass  # No media to upload
+                else:
+                    raise Exception("No media identifiers found after upload.")
 
             if on_progress:
                 on_progress(1, total_steps)
