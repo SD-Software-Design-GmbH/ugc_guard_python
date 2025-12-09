@@ -31,11 +31,14 @@ class GuardEvaluation(BaseModel):
     created_at: Optional[datetime] = None
     ongoing: Optional[StrictBool] = Field(default=True, description="Indicates whether the evaluation is still ongoing or has been completed")
     passed: Optional[StrictBool] = None
+    failed: Optional[StrictBool] = Field(default=False, description="Indicates whether the guard evaluation failed. Null if ongoing.")
+    failure_reason: Optional[StrictStr] = None
+    content_json: Optional[StrictStr] = None
     task_id: Optional[StrictStr] = None
     guard_id: StrictStr = Field(description="ID of the guard that was evaluated")
     report_id: Optional[StrictStr]
     severity: Optional[StrictInt] = None
-    __properties: ClassVar[List[str]] = ["id", "created_at", "ongoing", "passed", "task_id", "guard_id", "report_id", "severity"]
+    __properties: ClassVar[List[str]] = ["id", "created_at", "ongoing", "passed", "failed", "failure_reason", "content_json", "task_id", "guard_id", "report_id", "severity"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -86,6 +89,16 @@ class GuardEvaluation(BaseModel):
         if self.passed is None and "passed" in self.model_fields_set:
             _dict['passed'] = None
 
+        # set to None if failure_reason (nullable) is None
+        # and model_fields_set contains the field
+        if self.failure_reason is None and "failure_reason" in self.model_fields_set:
+            _dict['failure_reason'] = None
+
+        # set to None if content_json (nullable) is None
+        # and model_fields_set contains the field
+        if self.content_json is None and "content_json" in self.model_fields_set:
+            _dict['content_json'] = None
+
         # set to None if task_id (nullable) is None
         # and model_fields_set contains the field
         if self.task_id is None and "task_id" in self.model_fields_set:
@@ -117,6 +130,9 @@ class GuardEvaluation(BaseModel):
             "created_at": obj.get("created_at"),
             "ongoing": obj.get("ongoing") if obj.get("ongoing") is not None else True,
             "passed": obj.get("passed"),
+            "failed": obj.get("failed") if obj.get("failed") is not None else False,
+            "failure_reason": obj.get("failure_reason"),
+            "content_json": obj.get("content_json"),
             "task_id": obj.get("task_id"),
             "guard_id": obj.get("guard_id"),
             "report_id": obj.get("report_id"),

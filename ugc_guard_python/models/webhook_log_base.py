@@ -18,26 +18,25 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from ugc_guard_python.models.content_type import ContentType
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ContentCreate(BaseModel):
+class WebhookLogBase(BaseModel):
     """
-    Model for creating content. This is used to define the fields required to create a new content.
+    Base model without any potentially big data fields.
     """ # noqa: E501
-    body_type: Optional[ContentType] = None
-    body: Optional[StrictStr] = None
-    media_identifiers: Optional[List[StrictStr]] = None
-    extra_data: Optional[Dict[str, Any]] = None
-    created_at: Optional[datetime] = None
-    unique_partner_id: Optional[StrictStr] = None
-    ip: Optional[StrictStr] = None
-    creator_id: Optional[StrictStr] = None
-    type_id: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["body_type", "body", "media_identifiers", "extra_data", "created_at", "unique_partner_id", "ip", "creator_id", "type_id"]
+    id: Optional[StrictStr] = None
+    description: StrictStr = Field(description="Webhook description")
+    invoked_at: Optional[datetime] = Field(default=None, description="The time the webhook was invoked")
+    status_code: StrictInt = Field(description="The HTTP status code returned by the webhook endpoint")
+    request_url: StrictStr = Field(description="The URL to which the webhook request was sent")
+    webhook_method: Annotated[str, Field(strict=True, max_length=7)] = Field(description="The HTTP method used for the webhook request (e.g., POST, GET)")
+    successful: StrictBool = Field(description="Whether the webhook invocation was successful (2xx status code)")
+    error_message: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["id", "description", "invoked_at", "status_code", "request_url", "webhook_method", "successful", "error_message"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -57,7 +56,7 @@ class ContentCreate(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ContentCreate from a JSON string"""
+        """Create an instance of WebhookLogBase from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -78,31 +77,16 @@ class ContentCreate(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if body (nullable) is None
+        # set to None if error_message (nullable) is None
         # and model_fields_set contains the field
-        if self.body is None and "body" in self.model_fields_set:
-            _dict['body'] = None
-
-        # set to None if ip (nullable) is None
-        # and model_fields_set contains the field
-        if self.ip is None and "ip" in self.model_fields_set:
-            _dict['ip'] = None
-
-        # set to None if creator_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.creator_id is None and "creator_id" in self.model_fields_set:
-            _dict['creator_id'] = None
-
-        # set to None if type_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.type_id is None and "type_id" in self.model_fields_set:
-            _dict['type_id'] = None
+        if self.error_message is None and "error_message" in self.model_fields_set:
+            _dict['error_message'] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ContentCreate from a dict"""
+        """Create an instance of WebhookLogBase from a dict"""
         if obj is None:
             return None
 
@@ -110,15 +94,14 @@ class ContentCreate(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "body_type": obj.get("body_type"),
-            "body": obj.get("body"),
-            "media_identifiers": obj.get("media_identifiers"),
-            "extra_data": obj.get("extra_data"),
-            "created_at": obj.get("created_at"),
-            "unique_partner_id": obj.get("unique_partner_id"),
-            "ip": obj.get("ip"),
-            "creator_id": obj.get("creator_id"),
-            "type_id": obj.get("type_id")
+            "id": obj.get("id"),
+            "description": obj.get("description"),
+            "invoked_at": obj.get("invoked_at"),
+            "status_code": obj.get("status_code"),
+            "request_url": obj.get("request_url"),
+            "webhook_method": obj.get("webhook_method"),
+            "successful": obj.get("successful"),
+            "error_message": obj.get("error_message")
         })
         return _obj
 

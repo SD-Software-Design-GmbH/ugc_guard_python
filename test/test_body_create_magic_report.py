@@ -54,7 +54,6 @@ class TestBodyCreateMagicReport(unittest.TestCase):
                     ip = '', 
                     creator_id = '', 
                     type_id = '', ),
-                main_content_sender = None,
                 report_context = [
                     ugc_guard_python.models.content_create.ContentCreate(
                         body_type = 'text', 
@@ -86,6 +85,7 @@ class TestBodyCreateMagicReport(unittest.TestCase):
                             ''
                             ], )
                     ],
+                main_content_sender = None,
                 channels = [
                     ''
                     ]
@@ -111,7 +111,6 @@ class TestBodyCreateMagicReport(unittest.TestCase):
                     ip = '', 
                     creator_id = '', 
                     type_id = '', ),
-                main_content_sender = None,
                 report_context = [
                     ugc_guard_python.models.content_create.ContentCreate(
                         body_type = 'text', 

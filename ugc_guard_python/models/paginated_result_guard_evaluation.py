@@ -17,25 +17,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from ugc_guard_python.models.person import Person
-from ugc_guard_python.models.report_category import ReportCategory
+from pydantic import BaseModel, ConfigDict, Field, StrictInt
+from typing import Any, ClassVar, Dict, List
+from ugc_guard_python.models.guard_evaluation import GuardEvaluation
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ReportersWithPerson(BaseModel):
+class PaginatedResultGuardEvaluation(BaseModel):
     """
-    Reporters with person information.
+    PaginatedResultGuardEvaluation
     """ # noqa: E501
-    report_id: StrictStr
-    reporter_id: StrictStr
-    created_at: Optional[datetime] = None
-    reporter_category: Optional[ReportCategory] = None
-    custom_message: Optional[StrictStr] = None
-    reporter: Optional[Person] = None
-    __properties: ClassVar[List[str]] = ["report_id", "reporter_id", "created_at", "reporter_category", "custom_message", "reporter"]
+    count: StrictInt = Field(description="Number of items available items in the database following given criteria")
+    items: List[GuardEvaluation] = Field(description="List of items returned in the response following given criteria")
+    __properties: ClassVar[List[str]] = ["count", "items"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -55,7 +49,7 @@ class ReportersWithPerson(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ReportersWithPerson from a JSON string"""
+        """Create an instance of PaginatedResultGuardEvaluation from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -76,24 +70,18 @@ class ReportersWithPerson(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of reporter
-        if self.reporter:
-            _dict['reporter'] = self.reporter.to_dict()
-        # set to None if custom_message (nullable) is None
-        # and model_fields_set contains the field
-        if self.custom_message is None and "custom_message" in self.model_fields_set:
-            _dict['custom_message'] = None
-
-        # set to None if reporter (nullable) is None
-        # and model_fields_set contains the field
-        if self.reporter is None and "reporter" in self.model_fields_set:
-            _dict['reporter'] = None
-
+        # override the default output from pydantic by calling `to_dict()` of each item in items (list)
+        _items = []
+        if self.items:
+            for _item_items in self.items:
+                if _item_items:
+                    _items.append(_item_items.to_dict())
+            _dict['items'] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ReportersWithPerson from a dict"""
+        """Create an instance of PaginatedResultGuardEvaluation from a dict"""
         if obj is None:
             return None
 
@@ -101,12 +89,8 @@ class ReportersWithPerson(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "report_id": obj.get("report_id"),
-            "reporter_id": obj.get("reporter_id"),
-            "created_at": obj.get("created_at"),
-            "reporter_category": obj.get("reporter_category"),
-            "custom_message": obj.get("custom_message"),
-            "reporter": Person.from_dict(obj["reporter"]) if obj.get("reporter") is not None else None
+            "count": obj.get("count"),
+            "items": [GuardEvaluation.from_dict(_item) for _item in obj["items"]] if obj.get("items") is not None else None
         })
         return _obj
 

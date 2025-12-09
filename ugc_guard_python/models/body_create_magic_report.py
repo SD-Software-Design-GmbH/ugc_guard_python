@@ -34,11 +34,11 @@ class BodyCreateMagicReport(BaseModel):
     report: ReportCreate
     reporter: Reporter
     main_content: ContentCreate
-    main_content_sender: MainContentSender
     report_context: List[ContentCreate]
     report_context_persons: List[Person]
+    main_content_sender: Optional[MainContentSender] = None
     channels: Optional[List[StrictStr]] = None
-    __properties: ClassVar[List[str]] = ["report", "reporter", "main_content", "main_content_sender", "report_context", "report_context_persons", "channels"]
+    __properties: ClassVar[List[str]] = ["report", "reporter", "main_content", "report_context", "report_context_persons", "main_content_sender", "channels"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -88,9 +88,6 @@ class BodyCreateMagicReport(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of main_content
         if self.main_content:
             _dict['main_content'] = self.main_content.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of main_content_sender
-        if self.main_content_sender:
-            _dict['main_content_sender'] = self.main_content_sender.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in report_context (list)
         _items = []
         if self.report_context:
@@ -105,6 +102,14 @@ class BodyCreateMagicReport(BaseModel):
                 if _item_report_context_persons:
                     _items.append(_item_report_context_persons.to_dict())
             _dict['report_context_persons'] = _items
+        # override the default output from pydantic by calling `to_dict()` of main_content_sender
+        if self.main_content_sender:
+            _dict['main_content_sender'] = self.main_content_sender.to_dict()
+        # set to None if main_content_sender (nullable) is None
+        # and model_fields_set contains the field
+        if self.main_content_sender is None and "main_content_sender" in self.model_fields_set:
+            _dict['main_content_sender'] = None
+
         # set to None if channels (nullable) is None
         # and model_fields_set contains the field
         if self.channels is None and "channels" in self.model_fields_set:
@@ -125,9 +130,9 @@ class BodyCreateMagicReport(BaseModel):
             "report": ReportCreate.from_dict(obj["report"]) if obj.get("report") is not None else None,
             "reporter": Reporter.from_dict(obj["reporter"]) if obj.get("reporter") is not None else None,
             "main_content": ContentCreate.from_dict(obj["main_content"]) if obj.get("main_content") is not None else None,
-            "main_content_sender": MainContentSender.from_dict(obj["main_content_sender"]) if obj.get("main_content_sender") is not None else None,
             "report_context": [ContentCreate.from_dict(_item) for _item in obj["report_context"]] if obj.get("report_context") is not None else None,
             "report_context_persons": [Person.from_dict(_item) for _item in obj["report_context_persons"]] if obj.get("report_context_persons") is not None else None,
+            "main_content_sender": MainContentSender.from_dict(obj["main_content_sender"]) if obj.get("main_content_sender") is not None else None,
             "channels": obj.get("channels")
         })
         return _obj

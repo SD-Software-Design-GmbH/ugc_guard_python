@@ -21,4 +21,5 @@ from ugc_guard_python.api.rules_api import RulesApi
 from ugc_guard_python.api.stats_api import StatsApi
 from ugc_guard_python.api.types_api import TypesApi
 from ugc_guard_python.api.users_api import UsersApi
+from ugc_guard_python.api.webhook_logs_api import WebhookLogsApi
 

@@ -51,7 +51,6 @@ class TestContentCreate(unittest.TestCase):
             )
         else:
             return ContentCreate(
-                creator_id = '',
         )
         """
 

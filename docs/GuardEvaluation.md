@@ -10,6 +10,9 @@ Name | Type | Description | Notes
 **created_at** | **datetime** |  | [optional] 
 **ongoing** | **bool** | Indicates whether the evaluation is still ongoing or has been completed | [optional] [default to True]
 **passed** | **bool** |  | [optional] 
+**failed** | **bool** | Indicates whether the guard evaluation failed. Null if ongoing. | [optional] [default to False]
+**failure_reason** | **str** |  | [optional] 
+**content_json** | **str** |  | [optional] 
 **task_id** | **str** |  | [optional] 
 **guard_id** | **str** | ID of the guard that was evaluated | 
 **report_id** | **str** |  | 

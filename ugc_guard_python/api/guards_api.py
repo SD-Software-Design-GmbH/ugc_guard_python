@@ -16,7 +16,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictInt, StrictStr
+from datetime import datetime
+from pydantic import StrictBool, StrictInt, StrictStr
 from typing import Any, List, Optional
 from ugc_guard_python.models.body_enqueue_guard_evaluation import BodyEnqueueGuardEvaluation
 from ugc_guard_python.models.body_estimate_tokens_for_guard import BodyEstimateTokensForGuard
@@ -24,8 +25,10 @@ from ugc_guard_python.models.filled_guard import FilledGuard
 from ugc_guard_python.models.filled_guard_evaluation import FilledGuardEvaluation
 from ugc_guard_python.models.guard import Guard
 from ugc_guard_python.models.guard_evaluation import GuardEvaluation
+from ugc_guard_python.models.guard_evaluation_usage_stats import GuardEvaluationUsageStats
 from ugc_guard_python.models.guard_rule_connection import GuardRuleConnection
 from ugc_guard_python.models.paginated_result_guard import PaginatedResultGuard
+from ugc_guard_python.models.paginated_result_guard_evaluation import PaginatedResultGuardEvaluation
 from ugc_guard_python.models.token_estimation_result import TokenEstimationResult
 
 from ugc_guard_python.api_client import ApiClient, RequestSerialized
@@ -1784,6 +1787,344 @@ class GuardsApi:
 
 
     @validate_call
+    def get_guard_evaluation_stats(
+        self,
+        guard_id: Optional[StrictStr] = None,
+        module_id: Optional[StrictStr] = None,
+        lower_bound: Optional[datetime] = None,
+        upper_bound: Optional[datetime] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> GuardEvaluationUsageStats:
+        """Get Guard Evaluation Stats
+
+        Get guard evaluation statistics
+
+        :param guard_id:
+        :type guard_id: str
+        :param module_id:
+        :type module_id: str
+        :param lower_bound:
+        :type lower_bound: datetime
+        :param upper_bound:
+        :type upper_bound: datetime
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_guard_evaluation_stats_serialize(
+            guard_id=guard_id,
+            module_id=module_id,
+            lower_bound=lower_bound,
+            upper_bound=upper_bound,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GuardEvaluationUsageStats",
+            '404': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_guard_evaluation_stats_with_http_info(
+        self,
+        guard_id: Optional[StrictStr] = None,
+        module_id: Optional[StrictStr] = None,
+        lower_bound: Optional[datetime] = None,
+        upper_bound: Optional[datetime] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[GuardEvaluationUsageStats]:
+        """Get Guard Evaluation Stats
+
+        Get guard evaluation statistics
+
+        :param guard_id:
+        :type guard_id: str
+        :param module_id:
+        :type module_id: str
+        :param lower_bound:
+        :type lower_bound: datetime
+        :param upper_bound:
+        :type upper_bound: datetime
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_guard_evaluation_stats_serialize(
+            guard_id=guard_id,
+            module_id=module_id,
+            lower_bound=lower_bound,
+            upper_bound=upper_bound,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GuardEvaluationUsageStats",
+            '404': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_guard_evaluation_stats_without_preload_content(
+        self,
+        guard_id: Optional[StrictStr] = None,
+        module_id: Optional[StrictStr] = None,
+        lower_bound: Optional[datetime] = None,
+        upper_bound: Optional[datetime] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Guard Evaluation Stats
+
+        Get guard evaluation statistics
+
+        :param guard_id:
+        :type guard_id: str
+        :param module_id:
+        :type module_id: str
+        :param lower_bound:
+        :type lower_bound: datetime
+        :param upper_bound:
+        :type upper_bound: datetime
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_guard_evaluation_stats_serialize(
+            guard_id=guard_id,
+            module_id=module_id,
+            lower_bound=lower_bound,
+            upper_bound=upper_bound,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GuardEvaluationUsageStats",
+            '404': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_guard_evaluation_stats_serialize(
+        self,
+        guard_id,
+        module_id,
+        lower_bound,
+        upper_bound,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if guard_id is not None:
+            
+            _query_params.append(('guard_id', guard_id))
+            
+        if module_id is not None:
+            
+            _query_params.append(('module_id', module_id))
+            
+        if lower_bound is not None:
+            if isinstance(lower_bound, datetime):
+                _query_params.append(
+                    (
+                        'lower_bound',
+                        lower_bound.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('lower_bound', lower_bound))
+            
+        if upper_bound is not None:
+            if isinstance(upper_bound, datetime):
+                _query_params.append(
+                    (
+                        'upper_bound',
+                        upper_bound.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('upper_bound', upper_bound))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'OAuth2PasswordBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/guards/results/stats',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def link_rule_to_guard(
         self,
         guard_id: StrictStr,
@@ -2067,6 +2408,480 @@ class GuardsApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/guards/{guard_id}/link/{rule_id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def list_guard_evaluations(
+        self,
+        guard_id: Optional[StrictStr] = None,
+        module_id: Optional[StrictStr] = None,
+        ongoing: Optional[StrictBool] = None,
+        passed: Optional[StrictBool] = None,
+        failed: Optional[StrictBool] = None,
+        sort_by: Optional[StrictStr] = None,
+        sort_order: Optional[StrictStr] = None,
+        search_query: Optional[StrictStr] = None,
+        before: Optional[datetime] = None,
+        after: Optional[datetime] = None,
+        offset: Optional[StrictInt] = None,
+        limit: Optional[StrictInt] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> PaginatedResultGuardEvaluation:
+        """List Guard Evaluations
+
+        Get paginated list of guard evaluations
+
+        :param guard_id:
+        :type guard_id: str
+        :param module_id:
+        :type module_id: str
+        :param ongoing:
+        :type ongoing: bool
+        :param passed:
+        :type passed: bool
+        :param failed:
+        :type failed: bool
+        :param sort_by:
+        :type sort_by: str
+        :param sort_order:
+        :type sort_order: str
+        :param search_query:
+        :type search_query: str
+        :param before:
+        :type before: datetime
+        :param after:
+        :type after: datetime
+        :param offset:
+        :type offset: int
+        :param limit:
+        :type limit: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_guard_evaluations_serialize(
+            guard_id=guard_id,
+            module_id=module_id,
+            ongoing=ongoing,
+            passed=passed,
+            failed=failed,
+            sort_by=sort_by,
+            sort_order=sort_order,
+            search_query=search_query,
+            before=before,
+            after=after,
+            offset=offset,
+            limit=limit,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PaginatedResultGuardEvaluation",
+            '404': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def list_guard_evaluations_with_http_info(
+        self,
+        guard_id: Optional[StrictStr] = None,
+        module_id: Optional[StrictStr] = None,
+        ongoing: Optional[StrictBool] = None,
+        passed: Optional[StrictBool] = None,
+        failed: Optional[StrictBool] = None,
+        sort_by: Optional[StrictStr] = None,
+        sort_order: Optional[StrictStr] = None,
+        search_query: Optional[StrictStr] = None,
+        before: Optional[datetime] = None,
+        after: Optional[datetime] = None,
+        offset: Optional[StrictInt] = None,
+        limit: Optional[StrictInt] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[PaginatedResultGuardEvaluation]:
+        """List Guard Evaluations
+
+        Get paginated list of guard evaluations
+
+        :param guard_id:
+        :type guard_id: str
+        :param module_id:
+        :type module_id: str
+        :param ongoing:
+        :type ongoing: bool
+        :param passed:
+        :type passed: bool
+        :param failed:
+        :type failed: bool
+        :param sort_by:
+        :type sort_by: str
+        :param sort_order:
+        :type sort_order: str
+        :param search_query:
+        :type search_query: str
+        :param before:
+        :type before: datetime
+        :param after:
+        :type after: datetime
+        :param offset:
+        :type offset: int
+        :param limit:
+        :type limit: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_guard_evaluations_serialize(
+            guard_id=guard_id,
+            module_id=module_id,
+            ongoing=ongoing,
+            passed=passed,
+            failed=failed,
+            sort_by=sort_by,
+            sort_order=sort_order,
+            search_query=search_query,
+            before=before,
+            after=after,
+            offset=offset,
+            limit=limit,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PaginatedResultGuardEvaluation",
+            '404': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def list_guard_evaluations_without_preload_content(
+        self,
+        guard_id: Optional[StrictStr] = None,
+        module_id: Optional[StrictStr] = None,
+        ongoing: Optional[StrictBool] = None,
+        passed: Optional[StrictBool] = None,
+        failed: Optional[StrictBool] = None,
+        sort_by: Optional[StrictStr] = None,
+        sort_order: Optional[StrictStr] = None,
+        search_query: Optional[StrictStr] = None,
+        before: Optional[datetime] = None,
+        after: Optional[datetime] = None,
+        offset: Optional[StrictInt] = None,
+        limit: Optional[StrictInt] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List Guard Evaluations
+
+        Get paginated list of guard evaluations
+
+        :param guard_id:
+        :type guard_id: str
+        :param module_id:
+        :type module_id: str
+        :param ongoing:
+        :type ongoing: bool
+        :param passed:
+        :type passed: bool
+        :param failed:
+        :type failed: bool
+        :param sort_by:
+        :type sort_by: str
+        :param sort_order:
+        :type sort_order: str
+        :param search_query:
+        :type search_query: str
+        :param before:
+        :type before: datetime
+        :param after:
+        :type after: datetime
+        :param offset:
+        :type offset: int
+        :param limit:
+        :type limit: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_guard_evaluations_serialize(
+            guard_id=guard_id,
+            module_id=module_id,
+            ongoing=ongoing,
+            passed=passed,
+            failed=failed,
+            sort_by=sort_by,
+            sort_order=sort_order,
+            search_query=search_query,
+            before=before,
+            after=after,
+            offset=offset,
+            limit=limit,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PaginatedResultGuardEvaluation",
+            '404': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _list_guard_evaluations_serialize(
+        self,
+        guard_id,
+        module_id,
+        ongoing,
+        passed,
+        failed,
+        sort_by,
+        sort_order,
+        search_query,
+        before,
+        after,
+        offset,
+        limit,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if guard_id is not None:
+            
+            _query_params.append(('guard_id', guard_id))
+            
+        if module_id is not None:
+            
+            _query_params.append(('module_id', module_id))
+            
+        if ongoing is not None:
+            
+            _query_params.append(('ongoing', ongoing))
+            
+        if passed is not None:
+            
+            _query_params.append(('passed', passed))
+            
+        if failed is not None:
+            
+            _query_params.append(('failed', failed))
+            
+        if sort_by is not None:
+            
+            _query_params.append(('sort_by', sort_by))
+            
+        if sort_order is not None:
+            
+            _query_params.append(('sort_order', sort_order))
+            
+        if search_query is not None:
+            
+            _query_params.append(('search_query', search_query))
+            
+        if before is not None:
+            if isinstance(before, datetime):
+                _query_params.append(
+                    (
+                        'before',
+                        before.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('before', before))
+            
+        if after is not None:
+            if isinstance(after, datetime):
+                _query_params.append(
+                    (
+                        'after',
+                        after.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('after', after))
+            
+        if offset is not None:
+            
+            _query_params.append(('offset', offset))
+            
+        if limit is not None:
+            
+            _query_params.append(('limit', limit))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'OAuth2PasswordBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/guards/results/',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

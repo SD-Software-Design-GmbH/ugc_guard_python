@@ -35,7 +35,7 @@ class Content(BaseModel):
     created_at: Optional[datetime] = None
     unique_partner_id: Optional[StrictStr] = None
     ip: Optional[StrictStr] = None
-    creator_id: Optional[StrictStr]
+    creator_id: Optional[StrictStr] = None
     type_id: Optional[StrictStr] = None
     id: Optional[StrictStr] = None
     report_id: StrictStr

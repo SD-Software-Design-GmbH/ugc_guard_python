@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **created_at** | **datetime** |  | [optional] 
 **unique_partner_id** | **str** |  | [optional] 
 **ip** | **str** |  | [optional] 
-**creator_id** | **str** |  | 
+**creator_id** | **str** |  | [optional] 
 **type_id** | **str** |  | [optional] 
 **id** | **str** |  | [optional] 
 **creator** | [**Person**](Person.md) |  | [optional] 

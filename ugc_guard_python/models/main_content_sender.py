@@ -58,6 +58,9 @@ class MainContentSender(BaseModel):
 
     @field_validator('actual_instance')
     def actual_instance_must_validate_anyof(cls, v):
+        if v is None:
+            return v
+
         instance = MainContentSender.model_construct()
         error_messages = []
         # validate data type: PersonDB
@@ -86,6 +89,9 @@ class MainContentSender(BaseModel):
     def from_json(cls, json_str: str) -> Self:
         """Returns the object represented by the json string"""
         instance = cls.model_construct()
+        if json_str is None:
+            return instance
+
         error_messages = []
         # anyof_schema_1_validator: Optional[PersonDB] = None
         try:

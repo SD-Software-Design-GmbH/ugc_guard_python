@@ -80,7 +80,6 @@ class TestContentPublic(unittest.TestCase):
             )
         else:
             return ContentPublic(
-                creator_id = '',
         )
         """
 

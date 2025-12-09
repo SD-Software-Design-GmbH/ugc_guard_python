@@ -8,9 +8,9 @@ Name | Type | Description | Notes
 **report** | [**ReportCreate**](ReportCreate.md) |  | 
 **reporter** | [**Reporter**](Reporter.md) |  | 
 **main_content** | [**ContentCreate**](ContentCreate.md) |  | 
-**main_content_sender** | [**MainContentSender**](MainContentSender.md) |  | 
 **report_context** | [**List[ContentCreate]**](ContentCreate.md) |  | 
 **report_context_persons** | [**List[Person]**](Person.md) |  | 
+**main_content_sender** | [**MainContentSender**](MainContentSender.md) |  | [optional] 
 **channels** | **List[str]** |  | [optional] 
 
 ## Example
